@@ -4,23 +4,42 @@ using UnityEngine;
 public class RollerSymbol : ScriptableObject, IWeightedListEntry
 {
     [SerializeField]
-    private string symbolId;
+    protected string symbolId;
     public string SymbolId => symbolId;
-    public Texture2D SymbolTex;
+    public Sprite SymbolSprite;
 
     [SerializeField, Tooltip("The default number of symbols that are added to the pool.")]
-    private int symbolCount;
+    protected int symbolCount;
     [HideInInspector]
     public int SymbolCount;
     public int Weight => SymbolCount;
+    [SerializeField]
+    protected int symbolSingleValue = 0;
+    [HideInInspector]
+    public int SymbolSingleValue;
+    [SerializeField]
+    protected int symbolTripleValue = 5;
+    [HideInInspector]
+    public int SymbolTripleValue;
     [SerializeField, Tooltip("The current luck value is multiplied by this in order to calculate the current pool.")]
-    private float luckWeight;
+    protected float luckWeight;
     [HideInInspector]
     public float LuckWeight;
+
+    public virtual void DoSingleEffect()
+    {
+        GlobalData.Instance.playerMoney += SymbolSingleValue;
+    }
+    public virtual void DoTripleEffect()
+    {
+        GlobalData.Instance.playerMoney += SymbolTripleValue;
+    }
 
     public void Awake()
     {
         SymbolCount = symbolCount;
+        SymbolSingleValue = symbolSingleValue;
+        SymbolTripleValue = symbolTripleValue;
         LuckWeight = luckWeight;
     }
 }
