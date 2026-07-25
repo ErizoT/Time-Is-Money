@@ -37,15 +37,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   renderQueue: 0
-  occlusion: 2
+  occlusion: 0
   maskingStrategy: 0
   color: {r: 0, g: 0, b: 0, a: 1}
-  enableOcclusion: 0
-  occludedColor: {r: 1, g: 0, b: 0, a: 1}
+  enableOcclusion: 1
+  occludedColor: {r: 0, g: 0, b: 0, a: 1}
   blendMode: 0
   extrusionMethod: 4
   scaling: 0
-  width: 4.5
+  width: 3.2
   minWidth: 0
   scaleWithResolution: 1
   referenceResolution: 0
