@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopLogic : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class ShopLogic : MonoBehaviour
         public float CostMultiplier;
         public int BuyLimit;
         public void Apply() => ApplierDelegate.Invoke();
-        private readonly Action ApplierDelegate;
+        public readonly Action ApplierDelegate;
         public ShopOption(string name, int cost, float costMultiplier, int buyLimit, Action applierDelegate)
         {
             Name = name;
@@ -22,20 +24,19 @@ public class ShopLogic : MonoBehaviour
         }
     }
     public Dictionary<string, ShopOption> shopOptions;
-
+    public ButtonDetails[] buttons;
     public GlobalData playerData => GlobalData.Instance; // The player data (current money, time, luck, etc)
-
-    public GameObject upgrade1, upgrade2, upgrade3, upgrade4;
-
 
     void Start()
     {
+        buttons = GetComponentsInChildren<ButtonDetails>();
         shopOptions = new Dictionary<string, ShopOption>()
         {
             { "slowTime", new ShopOption("slowTime", 1, 3, 2, SlowTime) },
             { "speedLuck", new ShopOption("speedLuck", 1, 3, 2, SpeedLuck) },
             { "buyLuck", new ShopOption("buyLuck", 1, 3, 2, BuyLuck) },
             { "increaseItemWeight", new ShopOption("increaseItemWeight", 1, 3, 2, () => IncreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
+            { "freeDoubleTime", new ShopOption("freeDoubleTime", 1, 3, 2, FreeDoubleTime) },
         };
         
     }
@@ -43,7 +44,26 @@ public class ShopLogic : MonoBehaviour
     public void Reroll()
     {
         // Reroll the shop
+        List<ShopOption> list = shopOptions.Values.ToList();
+        int[] ints = new int[list.Count];
+        for (int i = 0; i < ints.Length; i++)
+        {
+            ints[i] = i;
+        }
+        for (int i = ints.Length - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            (ints[j], ints[i]) = (ints[i], ints[j]);
+        }
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            //Button button = buttons[i];
+            ShopOption shopOption = list[ints[i]];
 
+            buttons[i].text.text = shopOption.Name;
+            buttons[i].action = shopOption.ApplierDelegate;
+
+        }
 
     }
 
@@ -101,5 +121,13 @@ public class ShopLogic : MonoBehaviour
         // Insert code here to make a symbol appear more
     }
 
+    public void FreeDoubleTime()
+    {
+        // The player can make time go double time in exchange for free respins
 
+        var freeDoubleTime = shopOptions["freeDoubleTime"];
+        playerData.timeTickRate = 2f;
+        // Re-spins become free
+
+    }
 }
