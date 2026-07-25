@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RollerDisplay : MonoBehaviour
 {
-    //public int value1, value2, value3;
-    public RollerSymbols.Enum rollerSymbol1, rollerSymbol2, rollerSymbol3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,7 +16,7 @@ public class RollerDisplay : MonoBehaviour
         // Clicking 
     }
 
-    public void Roll(int roll1, int roll2, int roll3)
+    public void Roll(RollerSymbol roll1, RollerSymbol roll2, RollerSymbol roll3)
     {
         
     }
