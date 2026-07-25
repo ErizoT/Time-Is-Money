@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class GlobalLuck : MonoBehaviour
+public class GlobalData : MonoBehaviour
 {
-    public static GlobalLuck Instance;
+    public static GlobalData Instance;
 
     
 
