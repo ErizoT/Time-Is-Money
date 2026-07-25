@@ -43,7 +43,7 @@ public class GlobalRollerData : MonoBehaviour
             for (int i = 0; i < rollerSymbols.Length; i++)
             {
                 int calculatedWeight = rollerSymbols[i].Weight;
-                calculatedWeight = Mathf.FloorToInt(calculatedWeight * luckCoefficient);
+                calculatedWeight = Mathf.FloorToInt(calculatedWeight + rollerSymbols[i].LuckWeight * luckCoefficient);
                 rollerOptions[i] = new RollerOption(i, calculatedWeight);
             }
             RollerSymbols = new WeightedList<RollerOption>();
