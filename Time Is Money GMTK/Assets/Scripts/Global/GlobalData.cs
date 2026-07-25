@@ -4,7 +4,10 @@ public class GlobalData : MonoBehaviour
 {
     public static GlobalData Instance;
 
-    
+    public int playerTime;
+    public int playerMoney;
+    public float timeTickRate;
+    public float playerLuck;
 
     public void Start()
     {
