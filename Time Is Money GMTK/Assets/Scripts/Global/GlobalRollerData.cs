@@ -6,13 +6,19 @@ public class GlobalRollerData : MonoBehaviour
     [SerializeField]
     private int SlotMachineCount = 3;
     public RollerSymbol[] RollerSymbols;
-    public Dictionary<string, RollerSymbol> RollerSymbolsPerId;
+    public Dictionary<string, RollerSymbol> RollerSymbolsPerId = new Dictionary<string, RollerSymbol>();
     public LuckData[] LuckPerMachine;
     public class LuckData
     {
         private float _rollerLuck;
-        public float RollerLuck => _rollerLuck;
-        private readonly struct RollerOption : IWeightedListEntry
+        public float RollerLuck 
+            { get => _rollerLuck; 
+            set 
+            {
+
+            } 
+        }
+        public readonly struct RollerOption : IWeightedListEntry
         {
             public readonly int SymbolId { get => _symbolId; }
             private readonly int _symbolId;
@@ -26,10 +32,14 @@ public class GlobalRollerData : MonoBehaviour
             }
         }
         private WeightedList<RollerOption> RollerSymbols;
-        public int RollRandomSymbol()
+        public int RollRandomSymbolId()
         {
             int randomInt = UnityEngine.Random.Range(0, RollerSymbols.TotalWeight);
             return RollerSymbols.GetRandom(randomInt).SymbolId;
+        }
+        public RollerSymbol RollRandomSymbol()
+        {
+            return GlobalData.RollerData.RollerSymbols[RollRandomSymbolId()];
         }
         public LuckData(RollerSymbol[] rollerSymbols, float rollerLuck)
         {
@@ -43,10 +53,14 @@ public class GlobalRollerData : MonoBehaviour
             for (int i = 0; i < rollerSymbols.Length; i++)
             {
                 int calculatedWeight = rollerSymbols[i].Weight;
-                calculatedWeight = Mathf.FloorToInt(calculatedWeight + rollerSymbols[i].LuckWeight * luckCoefficient);
+                float floatWeight = calculatedWeight + (rollerSymbols[i].LuckWeight * luckCoefficient);
+                int bonusSymbol = UnityEngine.Random.Range(0, 1) < floatWeight % 1 ? 1 : 0; 
+
+                calculatedWeight = Mathf.FloorToInt(floatWeight + bonusSymbol * Mathf.Sign(rollerSymbols[i].LuckWeight));
+                
                 rollerOptions[i] = new RollerOption(i, calculatedWeight);
             }
-            RollerSymbols = new WeightedList<RollerOption>();
+            RollerSymbols = new WeightedList<RollerOption>(rollerOptions);
         }
     }
     public void Initialise()

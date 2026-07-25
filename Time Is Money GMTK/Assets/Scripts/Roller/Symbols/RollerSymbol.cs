@@ -35,7 +35,7 @@ public class RollerSymbol : ScriptableObject, IWeightedListEntry
         GlobalData.Instance.playerMoney += SymbolTripleValue;
     }
 
-    public void Awake()
+    public void OnEnable()
     {
         SymbolCount = symbolCount;
         SymbolSingleValue = symbolSingleValue;

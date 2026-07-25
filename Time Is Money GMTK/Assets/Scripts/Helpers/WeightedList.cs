@@ -55,4 +55,12 @@ public struct WeightedList<T> where T : IWeightedListEntry
         }
         return array[low].Item;
     }
+    #if UNITY_EDITOR
+    public void DumpContents()
+    {
+        for(int i = 0; i < array.Length; i++) {
+            Debug.Log($"Item #{i}: {array[i].Item}, weight {array[i].CumulativeWeight}");
+        }
+    }
+    #endif
 }

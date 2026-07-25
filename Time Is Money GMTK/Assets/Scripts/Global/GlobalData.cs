@@ -5,11 +5,12 @@ using UnityEngine;
 public class GlobalData : MonoBehaviour
 {
     public static GlobalData Instance;
-    [SerializeField] public static GlobalRollerData RollerData;
+    public static GlobalRollerData RollerData => Instance.rollerData;
+    public GlobalRollerData rollerData;
 
     public int playerTime;
     public int playerMoney;
-    public float timeTickRate;
+    public float timeTickRate = 1;
     public float playerLuck;
     public float PlayerLuck { get => playerLuck; 
         set 
@@ -26,7 +27,7 @@ public class GlobalData : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         UnityEngine.Random.InitState(RandomNumberGenerator.GetInt32(int.MaxValue));
-        RollerData.Initialise();
+        rollerData.Initialise();
     }
     public void RollLuck()
     {
