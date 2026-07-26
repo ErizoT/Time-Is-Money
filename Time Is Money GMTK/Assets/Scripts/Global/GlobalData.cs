@@ -37,11 +37,11 @@ public class GlobalData : SingletonBehaviour<GlobalData>
     [SerializeField] private int paidDebt = 0;
     public int PaidDebt
     {
-        get => PaidDebt;
+        get => paidDebt;
         set
         {
             OnDebtPaid?.Invoke(value);
-            PaidDebt = value;
+            paidDebt = value;
         }
     }
     public Action<int> OnDebtPaid;
