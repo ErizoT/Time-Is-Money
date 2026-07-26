@@ -48,15 +48,15 @@ public class RollerDisplay : MonoBehaviour
     }
     public void DoRoll()
     {
-        if (_isRolling) { return; }
+        if (IsRolling) { return; }
         if (GlobalData.Instance.PlayerMoney < GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollCost) { return; }
         StartCoroutine(PerformRoll());
     }
     IEnumerator PerformRoll()
     {
-        _isRolling = true;
+        IsRolling = true;
         int rollCost = GlobalRollerData.Instance.LuckPerMachine[_slotMachineId].RollCost;
-        if (GlobalData.Instance.PlayerMoney < rollCost)
+        if (GlobalData.Instance.PlayerMoney < rollCost && false)
         {
             animatorComponent.SetBool(doFailedRollEndHash, true);
             animatorComponent.SetBool(doFailedRollHash, true);
@@ -64,10 +64,16 @@ public class RollerDisplay : MonoBehaviour
             {
                 yield return null;
             }
+            IsRolling = false;
+            yield break;
         }
         GlobalData.Instance.PlayerMoney -= rollCost;
         animatorComponent.SetBool(doRollEndHash, true);
         animatorComponent.SetBool(doRollHash, true);
+        while (animatorComponent.GetBool(doRollHash))
+        {
+            yield return null;
+        }
         RollerSymbol rollerSymbol1, rollerSymbol2, rollerSymbol3;
         rollerSymbol1 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
         roller1.StartSpin(rollerSymbol1);
@@ -98,6 +104,6 @@ public class RollerDisplay : MonoBehaviour
             Debug.Log($"Rolled a single {rollerSymbol2.SymbolId}!");
             Debug.Log($"Rolled a single {rollerSymbol3.SymbolId}!");
         }
-        _isRolling = false;
+        IsRolling = false;
     }
 }
