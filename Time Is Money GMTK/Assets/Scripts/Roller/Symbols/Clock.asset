@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Time
   symbolId: clock
   symbolDescription: The bane of the office worker.
-  SymbolSprite: {fileID: 0}
+  SymbolSprite: {fileID: 21300000, guid: 34ead286688bc3c4f921e827ee34319b, type: 3}
   symbolCount: 0
   SymbolCount: 0
   symbolSingleValue: 30
   SymbolSingleValue: 30
   symbolTripleValue: 120
-  SymbolTripleValue: 240
+  SymbolTripleValue: 120
   luckWeight: 0.5
   LuckWeight: 0.5

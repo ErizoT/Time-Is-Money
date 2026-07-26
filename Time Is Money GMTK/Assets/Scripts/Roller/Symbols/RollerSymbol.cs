@@ -25,13 +25,13 @@ public class RollerSymbol : ScriptableObject, IWeightedListEntry
     public int SymbolCount;
     public int Weight { get => SymbolCount; set => symbolCount = value; }
     [SerializeField]
-    protected int symbolSingleValue = 0;
+    protected float symbolSingleValue = 0;
     [HideInInspector]
-    public int SymbolSingleValue;
+    public float SymbolSingleValue;
     [SerializeField]
-    protected int symbolTripleValue = 5;
+    protected float symbolTripleValue = 5;
     [HideInInspector]
-    public int SymbolTripleValue;
+    public float SymbolTripleValue;
     [SerializeField, Tooltip("The current luck value is multiplied by this in order to calculate the current pool.")]
     protected float luckWeight;
     [HideInInspector]
@@ -39,11 +39,11 @@ public class RollerSymbol : ScriptableObject, IWeightedListEntry
 
     public virtual void DoSingleEffect()
     {
-        GlobalData.Instance.PlayerMoney += SymbolSingleValue;
+        GlobalData.Instance.PlayerMoney += (int)SymbolSingleValue;
     }
     public virtual void DoTripleEffect()
     {
-        GlobalData.Instance.PlayerMoney += SymbolTripleValue;
+        GlobalData.Instance.PlayerMoney += (int)SymbolTripleValue;
     }
 
     public void OnEnable()

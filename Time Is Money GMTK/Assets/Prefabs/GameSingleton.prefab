@@ -48,10 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GlobalData
   rollerData: {fileID: 7797733575925879726}
   State: {fileID: 3768306927648173714}
-  playerTime: 60
   playerMoney: 100
+  paidDebt: 0
   timeTickRate: 1
-  playerLuck: 1
+  initialRoundDuration: 300
 --- !u!114 &7797733575925879726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +70,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3c113330510ffee49a55d65b580f8ddb, type: 2}
   - {fileID: 11400000, guid: 94fc9d40b3a48484a8cf76b2c1915a21, type: 2}
   - {fileID: 11400000, guid: 0e225fad66550424b941466359d5ebbf, type: 2}
+  - {fileID: 11400000, guid: 1cdeb6ff22c0fb347a35588cd49a091b, type: 2}
+  - {fileID: 11400000, guid: af518f4d057c0a745a3eacaa7c58ccab, type: 2}
+  - {fileID: 11400000, guid: 7a67b383d6e878b488a6d1a0a9abd736, type: 2}
+  - {fileID: 11400000, guid: d2c2d4d4a9c1bb74c8ec43907382976e, type: 2}
+  - {fileID: 11400000, guid: 3b995a5f1680f3c40b88cf5dffb95fc2, type: 2}
+  - {fileID: 11400000, guid: 18ef6bc8fe59e82409511a3497b5b7e7, type: 2}
 --- !u!114 &3768306927648173714
 MonoBehaviour:
   m_ObjectHideFlags: 0
