@@ -223,7 +223,8 @@ public class ShopLogic : MonoBehaviour
         if (playerData.PlayerMoney >= speedSlots.Cost)
         {
             playerData.PlayerMoney -= speedSlots.Cost;
-            rollerData.MachineData.RollerDelay -= 4;
+            rollerData.MachineData.RollerDelay -= 1;
+            rollerData.MachineData.CountdownDelay -= 0.1f;
             boughtAbility = true; Reroll();
         }
         else
