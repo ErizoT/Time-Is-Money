@@ -24,6 +24,6 @@ public class MoneyUI : MonoBehaviour
 
     void OnMoneyChanged(int money)
     {
-        textField.text = money.ToString();
+        textField.text = "$"+ money.ToString();
     }
 }

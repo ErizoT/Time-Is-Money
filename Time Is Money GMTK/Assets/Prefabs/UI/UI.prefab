@@ -1166,6 +1166,7 @@ MonoBehaviour:
   shop: {fileID: 4713949093858076304}
   switchButton: {fileID: 3842892342497508037}
   timer: {fileID: 3645099380779160330}
+  money: {fileID: 6160925398343373689}
 --- !u!1 &8890831470977757614
 GameObject:
   m_ObjectHideFlags: 0

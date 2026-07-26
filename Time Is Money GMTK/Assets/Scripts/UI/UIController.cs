@@ -8,10 +8,14 @@ public class UIController : MonoBehaviour
     public Transform shop;
     public Transform switchButton;
     public Transform timer;
+    public Transform money;
 
 
     public bool timerIsActive => GlobalData.Instance.State.Current == GameState.Shop ||
                                  GlobalData.Instance.State.Current == GameState.Slots;
+
+    public bool moneyIsActive => GlobalData.Instance.State.Current == GameState.Shop ||
+                             GlobalData.Instance.State.Current == GameState.Slots;
     private void Awake()
     {
              
@@ -73,6 +77,9 @@ public class UIController : MonoBehaviour
     {
         if(timerIsActive) timer.gameObject.SetActive(true);
         else timer.gameObject.SetActive(false);
+
+        if (moneyIsActive) money.gameObject.SetActive(true);
+        else money.gameObject.SetActive(false);
     }
 
    
