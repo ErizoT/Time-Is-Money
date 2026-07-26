@@ -18,8 +18,8 @@ MonoBehaviour:
   symbolCount: 3
   SymbolCount: 3
   symbolSingleValue: 100
-  SymbolSingleValue: 300
+  SymbolSingleValue: 100
   symbolTripleValue: 0
   SymbolTripleValue: 0
-  luckWeight: 0
+  luckWeight: -0.25
   LuckWeight: 0

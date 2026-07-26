@@ -10,10 +10,6 @@ public class RollerDisplay : MonoBehaviour
     [SerializeField]
     int _slotMachineId;
     int SlotMachineId => _slotMachineId;
-    [SerializeField]
-    float RollerDelay = 8f;
-    [SerializeField]
-    float CountdownDelay = 0.75f;
     bool _isRolling = false;
     public bool IsRolling {
         get => _isRolling; 
@@ -73,8 +69,8 @@ public class RollerDisplay : MonoBehaviour
         yield return null;
         rollerSymbol3 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
         roller3.StartSpin(rollerSymbol3);
-        yield return new WaitForSeconds(RollerDelay * GlobalData.Instance.timeTickRate);
-        float countdownDelay = CountdownDelay * GlobalData.Instance.timeTickRate;
+        yield return new WaitForSeconds(GlobalRollerData.Instance.MachineData.RollerDelay);
+        float countdownDelay = GlobalRollerData.Instance.MachineData.CountdownDelay;
         roller1.StopSpin();
         yield return new WaitForSeconds(countdownDelay);
         roller2.StopSpin();
