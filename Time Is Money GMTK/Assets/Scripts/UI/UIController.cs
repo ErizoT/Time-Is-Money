@@ -10,10 +10,7 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log(GlobalData.Instance == null);
-        Debug.Log(GlobalData.Instance.State == null);
-        Debug.Log(GlobalData.Instance.State.SM == null);
-     
+             
         GlobalData.Instance.State.SM.SubscribeEnter(GameState.StartScreen, () => startScreen.gameObject.SetActive(true));
         GlobalData.Instance.State.SM.SubscribeExit(GameState.StartScreen, () => startScreen.gameObject.SetActive(false));
 
