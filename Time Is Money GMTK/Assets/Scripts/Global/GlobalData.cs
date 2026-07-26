@@ -1,5 +1,6 @@
 using KLRB.Utility;
 using System;
+using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -11,8 +12,9 @@ public class GlobalData : SingletonBehaviour<GlobalData>
     public static GlobalGameState GameState => Instance.State;
     public GlobalGameState State;
 
-    private int playerTime;
-    public int PlayerTime
+    private float playerTime;
+
+    public float PlayerTime
     {
         get => playerTime;
         set
@@ -21,7 +23,7 @@ public class GlobalData : SingletonBehaviour<GlobalData>
             playerTime = value;
         }
     }
-    public Action<int> OnPlayerTimeChanged;
+    public Action<float> OnPlayerTimeChanged;
     private int playerMoney;
     public int PlayerMoney
     {
@@ -34,6 +36,7 @@ public class GlobalData : SingletonBehaviour<GlobalData>
     }
     public Action<int> OnPlayerMoneyChanged;
     public float timeTickRate = 1;
+    public float initialRoundDuration = 300;
     private float playerLuck;
     public float PlayerLuck { get => playerLuck; 
         set 
@@ -44,12 +47,44 @@ public class GlobalData : SingletonBehaviour<GlobalData>
     }
     public Action<float> OnPlayerLuckChanged;
 
+    private bool gameCommenced;
+
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
         UnityEngine.Random.InitState(RandomNumberGenerator.GetInt32(int.MaxValue));
         rollerData.Initialise();
     }
+
+    public void StartGame()
+    {
+        gameCommenced = true;
+        playerTime = initialRoundDuration;
+    }
+
+     void Update()
+    {
+        Tick();
+    }
+
+    void Tick()
+    {
+        if (!gameCommenced) return;
+        playerTime -= Time.deltaTime * timeTickRate;
+        if(playerTime <= 0)
+        {
+            GameOver();
+        }
+    }
+
+    void GameOver()
+    {
+        gameCommenced = false;
+
+    }
+
+
+
     public void RollLuck()
     {
 
