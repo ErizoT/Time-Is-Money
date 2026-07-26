@@ -25,6 +25,6 @@ public class TimerUI : MonoBehaviour
     void OnTimeChanged(float time)
     {
         TimeSpan ts = TimeSpan.FromSeconds(time);
-        textField.text = string.Format("{0:00}:{1:00}", (int)ts.Minutes, ts.Seconds);
+        textField.text = string.Format("{0}:{1:00}", (int)ts.Minutes, ts.Seconds);
     }
 }

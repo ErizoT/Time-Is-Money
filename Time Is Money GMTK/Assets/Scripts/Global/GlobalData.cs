@@ -95,7 +95,7 @@ public class GlobalData : SingletonBehaviour<GlobalData>
     void GameOver()
     {
         gameCommenced = false;
-
+        State.SM.ChangeState(GameState.GameOver);
     }
 
 
