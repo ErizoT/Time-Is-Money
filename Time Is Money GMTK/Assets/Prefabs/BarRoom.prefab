@@ -276,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5350140446812382788}
   - component: {fileID: 4268230062127194606}
+  - component: {fileID: 5582225519950425159}
   m_Layer: 0
   m_Name: Phone
   m_TagString: Untagged
@@ -341,6 +342,23 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &5582225519950425159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435842212185116383}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
+  NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0.2
+  FrequencyGain: 0.3
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1814125600028693756
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8754934777114530153}
   - component: {fileID: 5073577206018648915}
+  - component: {fileID: 7851662560810766664}
   m_Layer: 0
   m_Name: Slot Machine
   m_TagString: Untagged
@@ -581,6 +600,23 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &7851662560810766664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451046936048836897}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
+  NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0.2
+  FrequencyGain: 0.3
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &4269663563224123139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,6 +1130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4654927955100135891}
   - component: {fileID: 7979858784819532590}
+  - component: {fileID: 1315856274713187243}
   m_Layer: 0
   m_Name: Start Screen
   m_TagString: Untagged
@@ -1159,6 +1196,23 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1315856274713187243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660294689350398281}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
+  NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0.2
+  FrequencyGain: 0.3
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &8214967106649163799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,11 +1477,90 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3782516155095890323, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3230385546253291167}
   m_SourcePrefab: {fileID: 100100000, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
 --- !u!4 &410991039141575561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7695935175311681196, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
+  m_PrefabInstance: {fileID: 8032546416394247461}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6559321399128663222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3782516155095890323, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
+  m_PrefabInstance: {fileID: 8032546416394247461}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3230385546253291167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6559321399128663222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6590f1dc5140afa44a95c7bfbf4cd3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhoneController
+  moveTarget: {fileID: 8313735488389803365}
+  moveDistance: -5
+  upCurve:
+    duration: 1
+    upCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  downCurve:
+    duration: 1
+    upCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+--- !u!4 &8313735488389803365 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2024653942587945024, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
   m_PrefabInstance: {fileID: 8032546416394247461}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8902242847380860947

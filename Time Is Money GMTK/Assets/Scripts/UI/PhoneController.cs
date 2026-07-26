@@ -24,7 +24,7 @@ public class PhoneController : MonoBehaviour
     private bool phoneUp = false;
     private void Awake()
     {
-        moveTarget.transform.localPosition = moveTarget.transform.localPosition.With(y: -moveDistance);
+        moveTarget.transform.localPosition = moveTarget.transform.localPosition.With(y: moveDistance);
         GlobalData.Instance.State.SM.SubscribeEnter(GameState.Shop, OnPhoneRaise);
         GlobalData.Instance.State.SM.SubscribeExit(GameState.Shop, OnPhoneLower);
     }
@@ -33,19 +33,19 @@ public class PhoneController : MonoBehaviour
     {
         if (phoneTween == null)
         {
-            phoneTween = moveTarget.DOLocalMoveY(-moveDistance, 0f).SetAutoKill(false);
+            phoneTween = moveTarget.DOLocalMove( Vector3.up * moveDistance, 0f).SetAutoKill(false);
         }
     }
     void OnPhoneRaise()
     {
         InitTweens();
-        phoneTween.ChangeEndValue(0f,upCurve.duration, true).Restart();
+        phoneTween.ChangeEndValue(Vector3.zero, upCurve.duration, true).Restart();
     }
 
 
     void OnPhoneLower()
     {
         InitTweens();
-        phoneTween.ChangeEndValue(-moveDistance, downCurve.duration, true).Restart();
+        phoneTween.ChangeEndValue(Vector3.up * moveDistance, downCurve.duration, true).Restart();
     }
 }
