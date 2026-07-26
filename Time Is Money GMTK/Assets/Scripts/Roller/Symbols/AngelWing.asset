@@ -17,9 +17,9 @@ MonoBehaviour:
   SymbolSprite: {fileID: 21300000, guid: 3d2850f87ecc0614f958174334adfda5, type: 3}
   symbolCount: 0
   SymbolCount: 0
-  symbolSingleValue: 2
-  SymbolSingleValue: 0
-  symbolTripleValue: 8
+  symbolSingleValue: 1.5
+  SymbolSingleValue: 1.5
+  symbolTripleValue: 5
   SymbolTripleValue: 5
-  luckWeight: 1
-  LuckWeight: 0
+  luckWeight: 0.5
+  LuckWeight: 0.5
