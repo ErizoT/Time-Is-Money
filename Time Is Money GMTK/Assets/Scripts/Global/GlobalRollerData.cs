@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GlobalRollerData : MonoBehaviour
 {
+    public static GlobalRollerData Instance => GlobalData.Instance.rollerData;
     [SerializeField]
     private int SlotMachineCount = 3;
     public RollerSymbol[] RollerSymbols;
@@ -15,7 +16,8 @@ public class GlobalRollerData : MonoBehaviour
             { get => _rollerLuck; 
             set 
             {
-
+                _rollerLuck = value;
+                Recalculate(value);
             } 
         }
         public readonly struct RollerOption : IWeightedListEntry
@@ -41,12 +43,17 @@ public class GlobalRollerData : MonoBehaviour
         {
             return GlobalData.RollerData.RollerSymbols[RollRandomSymbolId()];
         }
-        public LuckData(RollerSymbol[] rollerSymbols, float rollerLuck)
+        public void AddSymbolWithWeight()
         {
-            Recalculate(rollerSymbols, rollerLuck);
+
         }
-        public void Recalculate(RollerSymbol[] rollerSymbols, float rollerLuck)
+        public LuckData(float rollerLuck)
         {
+            Recalculate(rollerLuck);
+        }
+        public void Recalculate(float rollerLuck)
+        {
+            RollerSymbol[] rollerSymbols = Instance.RollerSymbols;
             _rollerLuck = rollerLuck;
             RollerOption[] rollerOptions = new RollerOption[rollerSymbols.Length];
             float luckCoefficient = rollerLuck * GlobalData.Instance.playerLuck;
@@ -72,7 +79,7 @@ public class GlobalRollerData : MonoBehaviour
         LuckPerMachine = new LuckData[SlotMachineCount];
         for (int i = 0; i < SlotMachineCount; i++)
         {
-            LuckPerMachine[i] = new LuckData(RollerSymbols, Random.Range(0.5f, 1.5f));
+            LuckPerMachine[i] = new LuckData(Random.Range(0.5f, 1.5f));
         }
     }
 }
