@@ -51,24 +51,12 @@ public class RollerDisplay : MonoBehaviour
     {
         if (IsRolling) { return; }
         if (GlobalData.Instance.State.Current != GameState.Slots) return;
-        if (GlobalData.Instance.PlayerMoney < GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollCost) { return; }
         StartCoroutine(PerformRoll());
     }
     IEnumerator PerformRoll()
     {
         IsRolling = true;
         int rollCost = GlobalRollerData.Instance.LuckPerMachine[_slotMachineId].RollCost;
-        if (GlobalData.Instance.PlayerMoney < rollCost && false)
-        {
-            animatorComponent.SetBool(doFailedRollEndHash, true);
-            animatorComponent.SetBool(doFailedRollHash, true);
-            while (animatorComponent.GetBool(doFailedRollEndHash))
-            {
-                yield return null;
-            }
-            IsRolling = false;
-            yield break;
-        }
         GlobalData.Instance.PlayerMoney -= rollCost;
         animatorComponent.SetBool(doRollEndHash, true);
         animatorComponent.SetBool(doRollHash, true);
