@@ -4,12 +4,16 @@ using UnityEngine;
 public class DebugUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI luckDisplay;
+    [SerializeField] TextMeshProUGUI moneyDisplay;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         if (Application.isEditor)
         {
             GlobalData.Instance.OnPlayerLuckChanged += OnLuckUpdated;
+            OnLuckUpdated(GlobalData.Instance.PlayerLuck);
+            GlobalData.Instance.OnPlayerMoneyChanged += OnMoneyUpdated;
+            OnMoneyUpdated(GlobalData.Instance.PlayerMoney);
         }
         else
         {
@@ -20,4 +24,11 @@ public class DebugUI : MonoBehaviour
     {
         luckDisplay.text = $"Current luck: {luck}";
     }
+    void OnMoneyUpdated(int amount)
+    {
+        moneyDisplay.text = $"Current money: {amount}";
+    }
+    public void AddMoney() { GlobalData.Instance.PlayerMoney += 100; }
+    public void AddLuck() { GlobalData.Instance.PlayerLuck += 1; }
+
 }

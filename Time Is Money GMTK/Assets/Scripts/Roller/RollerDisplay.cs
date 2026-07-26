@@ -38,6 +38,7 @@ public class RollerDisplay : MonoBehaviour
     public void DoRoll()
     {
         if (_isRolling) { return; }
+        if (GlobalData.Instance.PlayerMoney < GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollCost) { return; }
         StartCoroutine(PerformRoll());
     }
     IEnumerator PerformRoll()
@@ -65,15 +66,19 @@ public class RollerDisplay : MonoBehaviour
         roller2.StopSpin();
         yield return new WaitForSeconds(countdownDelay);
         roller3.StopSpin();
-        if (rollerSymbol1 == rollerSymbol2 == rollerSymbol3) 
+        if (rollerSymbol1.SymbolId == rollerSymbol2.SymbolId && rollerSymbol2.SymbolId == rollerSymbol3.SymbolId) 
         {
             rollerSymbol1.DoTripleEffect();
+            Debug.Log($"Rolled a triple {rollerSymbol1.SymbolId}!");
         }
         else
         {
             rollerSymbol1.DoSingleEffect();
             rollerSymbol2.DoSingleEffect();
             rollerSymbol3.DoSingleEffect();
+            Debug.Log($"Rolled a single {rollerSymbol1.SymbolId}!");
+            Debug.Log($"Rolled a single {rollerSymbol2.SymbolId}!");
+            Debug.Log($"Rolled a single {rollerSymbol3.SymbolId}!");
         }
         _isRolling = false;
     }
