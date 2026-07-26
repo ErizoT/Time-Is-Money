@@ -27,16 +27,19 @@ public class ShopLogic : MonoBehaviour
     public ButtonDetails[] buttons;
     public GlobalData playerData => GlobalData.Instance; // The player data (current money, time, luck, etc)
 
+    public GlobalRollerData rollerData; // The script that contains stuff regarding the slot machine.
+
     void Start()
     {
         buttons = GetComponentsInChildren<ButtonDetails>();
         shopOptions = new Dictionary<string, ShopOption>()
         {
-            { "slowTime", new ShopOption("slowTime", 1, 3, 2, SlowTime) },
+            { "slowTime", new ShopOption("slowTime", 300, 1.5f, 2, SlowTime) },
             { "speedLuck", new ShopOption("speedLuck", 1, 3, 2, SpeedLuck) },
             { "buyLuck", new ShopOption("buyLuck", 1, 3, 2, BuyLuck) },
             { "increaseItemWeight", new ShopOption("increaseItemWeight", 1, 3, 2, () => IncreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
-            { "freeDoubleTime", new ShopOption("freeDoubleTime", 1, 3, 2, FreeDoubleTime) },
+            { "freeDoubleTime", new ShopOption("freeDoubleTime", 1, 3, 1, FreeDoubleTime) },
+            { "decreaseItemWeight", new ShopOption("decreaseItemWeigh", 1, 3, 2, () => DecreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
         };
         
     }
@@ -129,5 +132,16 @@ public class ShopLogic : MonoBehaviour
         playerData.timeTickRate = 2f;
         // Re-spins become free
 
+    }
+
+    public void DecreaseItemWeight(int symbolID)
+    {
+        // Player can spend money to remove a symbol from the slot machine
+
+        var removeSymbol = shopOptions["removeSymbol"];
+
+        playerData.playerMoney -= removeSymbol.Cost;
+        // Remove a symbol from the slot machine
+        rollerData.RollerSymbols[symbolID].Weight 
     }
 }
