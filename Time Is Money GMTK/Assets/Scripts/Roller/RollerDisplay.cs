@@ -11,16 +11,18 @@ public class RollerDisplay : MonoBehaviour
     int _slotMachineId;
     int SlotMachineId => _slotMachineId;
     bool _isRolling = false;
-    public bool IsRolling {
-        get => _isRolling; 
-        set { 
+    public bool IsRolling
+    {
+        get => _isRolling;
+        set
+        {
             OnIsRollingChanged?.Invoke(value);
             GlobalRollerData.Instance.NotifyRollerStateChanged(value);
-            _isRolling = value; 
-        } 
+            _isRolling = value;
+        }
     }
     public Action<bool> OnIsRollingChanged;
-    [SerializeField] 
+    [SerializeField]
     Animator animatorComponent;
     [SerializeField]
     RollerWheel roller1;
@@ -36,7 +38,7 @@ public class RollerDisplay : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -45,14 +47,27 @@ public class RollerDisplay : MonoBehaviour
     }
     public void DoRoll()
     {
-        if (IsRolling) { return; }
-        if (GlobalData.Instance.State.Current != GameState.Slots) return;
+        if (IsRolling)
+        {
+            animatorComponent.SetBool(doFailedRollHash, true);
+            return;
+        }
         StartCoroutine(PerformRoll());
     }
     IEnumerator PerformRoll()
     {
+        GlobalData.RollerData.LuckPerMachine[SlotMachineId].Recalculate();
         IsRolling = true;
         int rollCost = GlobalRollerData.Instance.LuckPerMachine[_slotMachineId].RollCost;
+        if (GlobalData.Instance.PlayerMoney < rollCost && false)
+        {
+            while (animatorComponent.GetBool(doFailedRollEndHash))
+            {
+                yield return null;
+            }
+            IsRolling = false;
+            yield break;
+        }
         GlobalData.Instance.PlayerMoney -= rollCost;
         animatorComponent.SetBool(doRollEndHash, true);
         animatorComponent.SetBool(doRollHash, true);
@@ -62,21 +77,31 @@ public class RollerDisplay : MonoBehaviour
         }
         RollerSymbol rollerSymbol1, rollerSymbol2, rollerSymbol3;
         rollerSymbol1 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
-        roller1.StartSpin(rollerSymbol1);
-        yield return null;
         rollerSymbol2 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
-        roller2.StartSpin(rollerSymbol2);
-        yield return null;
         rollerSymbol3 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
+        if (rollerSymbol1.SymbolId == rollerSymbol3.SymbolId)
+        {
+            (rollerSymbol3, rollerSymbol2) = (rollerSymbol2, rollerSymbol3); //gotta be the scummiest code I've ever written
+        }
+        roller1.StartSpin(rollerSymbol1);
+        roller2.StartSpin(rollerSymbol2);
         roller3.StartSpin(rollerSymbol3);
         yield return new WaitForSeconds(GlobalRollerData.Instance.MachineData.RollerDelay);
         float countdownDelay = GlobalRollerData.Instance.MachineData.CountdownDelay;
         roller1.StopSpin();
         yield return new WaitForSeconds(countdownDelay);
         roller2.StopSpin();
-        yield return new WaitForSeconds(countdownDelay);
+        if (rollerSymbol1.SymbolId == rollerSymbol2.SymbolId)
+        {
+            yield return new WaitForSeconds(countdownDelay * 1.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(countdownDelay);
+        }
+
         roller3.StopSpin();
-        if (rollerSymbol1.SymbolId == rollerSymbol2.SymbolId && rollerSymbol2.SymbolId == rollerSymbol3.SymbolId) 
+        if (rollerSymbol1.SymbolId == rollerSymbol2.SymbolId && rollerSymbol2.SymbolId == rollerSymbol3.SymbolId)
         {
             rollerSymbol1.DoTripleEffect();
             Debug.Log($"Rolled a triple {rollerSymbol1.SymbolId}!");
