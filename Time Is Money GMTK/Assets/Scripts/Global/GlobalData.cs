@@ -23,7 +23,8 @@ public class GlobalData : SingletonBehaviour<GlobalData>
         }
     }
     public Action<float> OnPlayerTimeChanged;
-    private int playerMoney;
+    [SerializeField] private int playerMoney;
+
     public int PlayerMoney
     {
         get => playerMoney;
@@ -84,7 +85,7 @@ public class GlobalData : SingletonBehaviour<GlobalData>
 
     void Tick()
     {
-        if (!gameCommenced) return;
+        if (!gameCommenced || State.Current == GameState.Shop) return;
         PlayerTime -= Time.deltaTime * timeTickRate;
         if(PlayerTime <= 0)
         {
