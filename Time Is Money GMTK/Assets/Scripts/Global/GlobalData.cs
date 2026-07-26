@@ -61,7 +61,6 @@ public class GlobalData : SingletonBehaviour<GlobalData>
 
     public void Start()
     {
-        DontDestroyOnLoad(gameObject);
         UnityEngine.Random.InitState(RandomNumberGenerator.GetInt32(int.MaxValue));
         rollerData.Initialise();
 

@@ -1,16 +1,22 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public TextMeshProUGUI tmpro;
+
+
+    void OnEnable()
     {
-        
+        tmpro.text = "You Made $" + GlobalData.Instance.PlayerMoney.ToString() + " ....";
+
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void Restart()
     {
-        
+        SceneManager.LoadScene(0);
     }
+
 }
