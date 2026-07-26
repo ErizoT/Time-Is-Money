@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DevilHorns
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Multiplier
   symbolId: devil_horns
-  symbolDescription: The horns of a devil
+  symbolDescription: Good for hornswoggling.
   SymbolSprite: {fileID: 21300000, guid: deacd2a70eabd8146b52e286fe4c0a16, type: 3}
   symbolCount: 0
   SymbolCount: 0

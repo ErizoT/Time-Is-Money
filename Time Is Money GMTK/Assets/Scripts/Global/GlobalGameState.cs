@@ -27,7 +27,7 @@ public  class GlobalGameState : MonoBehaviour
 
     private void Start()
     {
-        _sm.ChangeState(GameState.StartScreen);
+        SM.ChangeState(GameState.StartScreen);
     }
 
 }
