@@ -36,16 +36,6 @@ public class ShopLogic : MonoBehaviour
     void Start()
     {
         buttons = GetComponentsInChildren<ButtonDetails>();
-        
-        /*shopOptions = new Dictionary<string, ShopOption>()
-        {
-            { "slowTime", new ShopOption("slowTime", "Slow time by 50%", 300, 1.5f, 2, SlowTime) },
-            { "speedLuck", new ShopOption("speedLuck", "Increase your luck, but time speeds up 25%!", 10, 3, 2, SpeedLuck) },
-            { "buyLuck", new ShopOption("buyLuck", "Increase your luck by 0.5", 75, 1.25f, 2, BuyLuck) },
-            { "increaseItemWeight", new ShopOption("increaseItemWeight", "Increase the likelihood of a symbol!", 50, 5, 2, () => IncreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
-            { "freeDoubleTime", new ShopOption("freeDoubleTime", "Time speeds up 200%, but respins become free.", 10, 3, 1, FreeDoubleTime) },
-            { "decreaseItemWeight", new ShopOption("decreaseItemWeigh", "Decrease the likelihood of a symbol", 50, 3, 2, () => DecreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
-        };*/
 
         shopOptionFactories = new Dictionary<string, Func<ShopOption>>()
         {
@@ -58,7 +48,7 @@ public class ShopLogic : MonoBehaviour
                     return new ShopOption("increaseItemWeight", "Increase the likelihood of " + rollerData.RollerSymbols[rand].SymbolId, 50, 5, 2, () => IncreaseItemWeight(rand));
                 } 
             },
-            { "freeDoubleTime", () => new ShopOption("freeDoubleTime", "Time speeds up 200%, but respins become free.", 10, 3, 1, FreeDoubleTime) },
+            //{ "freeDoubleTime", () => new ShopOption("freeDoubleTime", "Time speeds up 200%, but respins become free.", 10, 3, 1, FreeDoubleTime) },
             { "decreaseItemWeight",
                 () => {
                     int rand = UnityEngine.Random.Range(0, rollerData.RollerSymbols.Length); 
@@ -74,27 +64,33 @@ public class ShopLogic : MonoBehaviour
     public void Reroll()
     {
         // Reroll the shop
-        List<Func<ShopOption>> list = shopOptionFactories.Values.ToList();
-        int[] ints = new int[list.Count];
-        for (int i = 0; i < ints.Length; i++)
-        {
-            ints[i] = i;
-        }
-        for (int i = ints.Length - 1; i > 0; i--)
-        {
-            int j = UnityEngine.Random.Range(0, i + 1);
-            (ints[j], ints[i]) = (ints[i], ints[j]);
-        }
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            //Button button = buttons[i];
-            ShopOption shopOption = list[ints[i]].Invoke();
 
-            buttons[i].text.text = shopOption.Description;
-            buttons[i].costText.text = "$" + shopOption.Cost.ToString();
-            buttons[i].action = shopOption.ApplierDelegate;
-        }
+        if (playerData.PlayerMoney < 50)
+        {
+            List<Func<ShopOption>> list = shopOptionFactories.Values.ToList();
+            int[] ints = new int[list.Count];
+            for (int i = 0; i < ints.Length; i++)
+            {
+                ints[i] = i;
+            }
+            for (int i = ints.Length - 1; i > 0; i--)
+            {
+                int j = UnityEngine.Random.Range(0, i + 1);
+                (ints[j], ints[i]) = (ints[i], ints[j]);
+            }
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                //Button button = buttons[i];
+                ShopOption shopOption = list[ints[i]].Invoke();
 
+                buttons[i].text.text = shopOption.Description;
+                buttons[i].costText.text = "$" + shopOption.Cost.ToString();
+                buttons[i].action = shopOption.ApplierDelegate;
+            }
+        } else
+        {
+            Debug.Log("Don't have enough money to reroll!");
+        }
     }
 
     public void SlowTime()
@@ -107,9 +103,16 @@ public class ShopLogic : MonoBehaviour
 
         var slowTime = shopOptionFactories["slowTime"].Invoke();
 
-        playerData.PlayerMoney -= slowTime.Cost;
-        playerData.timeTickRate /= 2;
-        slowTime.Cost = Mathf.FloorToInt(slowTime.CostMultiplier * slowTime.Cost);
+        if (playerData.PlayerMoney >= slowTime.Cost)
+        {
+            playerData.PlayerMoney -= slowTime.Cost;
+            playerData.timeTickRate /= 2;
+            slowTime.Cost = Mathf.FloorToInt(slowTime.CostMultiplier * slowTime.Cost);
+        }
+        else
+        {
+            Debug.Log("Don't have enough money!");
+        }
     }
 
     public void SpeedLuck()
@@ -122,8 +125,15 @@ public class ShopLogic : MonoBehaviour
 
         var speedLuck = shopOptionFactories["speedLuck"].Invoke();
 
-        playerData.timeTickRate *= 1.25f;
-        playerData.PlayerLuck *= 2;
+        if (playerData.PlayerMoney >= speedLuck.Cost)
+        {
+            playerData.timeTickRate *= 1.25f;
+            playerData.PlayerLuck *= 2;
+        }
+        else
+        {
+            Debug.Log("Don't have enough money!");
+        }
     }
 
    public void BuyLuck()
@@ -137,8 +147,15 @@ public class ShopLogic : MonoBehaviour
 
         var buyLuck = shopOptionFactories["buyLuck"].Invoke();
 
-        playerData.PlayerMoney -= buyLuck.Cost;
-        playerData.PlayerLuck += 0.5f;
+        if (playerData.PlayerMoney >= buyLuck.Cost)
+        {
+            playerData.PlayerMoney -= buyLuck.Cost;
+            playerData.PlayerLuck += 0.5f;
+        }
+        else
+        {
+            Debug.Log("Don't have enough money!");
+        }
     }
 
     public void IncreaseItemWeight(int symbolID)
@@ -147,10 +164,18 @@ public class ShopLogic : MonoBehaviour
 
         var symbolBuy = shopOptionFactories["increaseItemWeight"].Invoke();
 
-        playerData.PlayerMoney -= symbolBuy.Cost;
-        rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight + 10, 0);
+        if (playerData.PlayerMoney >= symbolBuy.Cost)
+        {
+            playerData.PlayerMoney -= symbolBuy.Cost;
+            rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight + 10, 0);
+        }
+        else
+        {
+            Debug.Log("Don't have enough money!");
+        }
     }
 
+    /*
     public void FreeDoubleTime()
     {
         // The player can make time go double time in exchange for free spins
@@ -159,15 +184,22 @@ public class ShopLogic : MonoBehaviour
         playerData.timeTickRate = 2f;
         
 
-    }
+    }*/
 
     public void DecreaseItemWeight(int symbolID)
     {
         // Player can spend money to remove a symbol from the slot machine
         var decreaseItemWeight = shopOptionFactories["decreaseItemWeight"].Invoke();
 
-        playerData.PlayerMoney -= decreaseItemWeight.Cost;
-        // Remove a symbol from the slot machine
-        rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight-10,0);
+        if (playerData.PlayerMoney >= decreaseItemWeight.Cost)
+        {
+            playerData.PlayerMoney -= decreaseItemWeight.Cost;
+            // Decrease symbol weight
+            rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight - 10, 0);
+        }
+        else
+        {
+            Debug.Log("Don't have enough money!");
+        }
     }
 }
