@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Jewel
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol
   symbolId: jewel
+  symbolDescription: pretty rock
   SymbolSprite: {fileID: 21300000, guid: 6e1af78173b92ee4bb9327d61335ffa0, type: 3}
   symbolCount: 3
-  SymbolCount: 5
+  SymbolCount: 3
   symbolSingleValue: 50
   SymbolSingleValue: 50
   symbolTripleValue: 500
   SymbolTripleValue: 500
   luckWeight: 2
-  LuckWeight: 1
+  LuckWeight: 2

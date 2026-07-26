@@ -6,6 +6,17 @@ public class RollerSymbol : ScriptableObject, IWeightedListEntry
     [SerializeField]
     protected string symbolId;
     public string SymbolId => symbolId;
+    [SerializeField]
+    protected string symbolDescription;
+    public virtual string SymbolDescription { 
+        get {
+            return symbolDescription + '\n' +
+            $"On single rolled: {GainOrLoseSingle} ${SymbolSingleValue}" + '\n' +
+            $"On triple rolled: {GainOrLoseTriple} ${SymbolTripleValue}";
+        } 
+    }
+    public virtual string GainOrLoseSingle => SymbolSingleValue < 0 ? "gain" : "lose";
+    public virtual string GainOrLoseTriple => SymbolTripleValue < 0 ? "gain" : "lose";
     public Sprite SymbolSprite;
 
     [SerializeField, Tooltip("The default number of symbols that are added to the pool.")]

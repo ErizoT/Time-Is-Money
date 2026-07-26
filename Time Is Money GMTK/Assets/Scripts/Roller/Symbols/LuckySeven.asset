@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: LuckySeven
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol
   symbolId: lucky_seven
+  symbolDescription: May have eaten 9.
   SymbolSprite: {fileID: 21300000, guid: 257b4842e521d1f4d8b8b8bb9db3d595, type: 3}
   symbolCount: 10
-  SymbolCount: 0
+  SymbolCount: 10
   symbolSingleValue: 7
-  SymbolSingleValue: 0
+  SymbolSingleValue: 7
   symbolTripleValue: 777
-  SymbolTripleValue: 5
+  SymbolTripleValue: 777
   luckWeight: 2
-  LuckWeight: 0
+  LuckWeight: 2

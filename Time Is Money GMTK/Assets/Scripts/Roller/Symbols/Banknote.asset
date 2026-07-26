@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Banknote
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol
   symbolId: banknote
+  symbolDescription: A worthless piece of paper.
   SymbolSprite: {fileID: 21300000, guid: 0bafcf944cb3cb34ea0d5bce80831544, type: 3}
   symbolCount: 15
-  SymbolCount: 0
+  SymbolCount: 15
   symbolSingleValue: 10
-  SymbolSingleValue: 0
+  SymbolSingleValue: 10
   symbolTripleValue: 120
-  SymbolTripleValue: 5
+  SymbolTripleValue: 120
   luckWeight: -0.25
-  LuckWeight: 0
+  LuckWeight: -0.25
