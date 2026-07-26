@@ -15,10 +15,10 @@ MonoBehaviour:
   symbolId: coin
   SymbolSprite: {fileID: 21300000, guid: 1c3c681caea30d943a1c4da3ff2e916e, type: 3}
   symbolCount: 25
-  SymbolCount: 0
-  symbolSingleValue: 0
+  SymbolCount: 25
+  symbolSingleValue: 1
   SymbolSingleValue: 0
   symbolTripleValue: 30
-  SymbolTripleValue: 5
+  SymbolTripleValue: 30
   luckWeight: -0.5
-  LuckWeight: 0
+  LuckWeight: -0.5
