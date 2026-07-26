@@ -12,6 +12,7 @@ public class ButtonDetails : MonoBehaviour
     // UI elements
     public Button button;
     public TextMeshProUGUI text;
+    public TextMeshProUGUI costText;
 
     private void Start()
     {
