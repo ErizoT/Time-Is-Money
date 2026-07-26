@@ -9,7 +9,6 @@ public class RollerHandle : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnMouseDown()
     {
-        Debug.Log("Clicked!");
         rollerDisplay.DoRoll();
     }
 }

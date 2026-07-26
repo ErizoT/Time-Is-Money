@@ -15,6 +15,14 @@ public class RollerDisplay : MonoBehaviour
     [SerializeField]
     float CountdownDelay = 0.75f;
     bool _isRolling = false;
+    public bool IsRolling {
+        get => _isRolling; 
+        set { 
+            OnIsRollingChanged?.Invoke(value);
+            _isRolling = value; 
+        } 
+    }
+    public Action<bool> OnIsRollingChanged;
     [SerializeField] 
     Animator animatorComponent;
     [SerializeField]
@@ -24,7 +32,10 @@ public class RollerDisplay : MonoBehaviour
     [SerializeField]
     RollerWheel roller3;
 
-    private static int rollNotCompleteHash = Animator.StringToHash("rollNotComplete");
+    private static int doRollHash = Animator.StringToHash("doRoll");
+    private static int doFailedRollHash = Animator.StringToHash("doFailedRoll");
+    private static int doRollEndHash = Animator.StringToHash("doRollEnd");
+    private static int doFailedRollEndHash = Animator.StringToHash("doFailedRollEnd");
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,12 +55,19 @@ public class RollerDisplay : MonoBehaviour
     IEnumerator PerformRoll()
     {
         _isRolling = true;
-        animatorComponent.SetBool(rollNotCompleteHash, true);
-        animatorComponent.SetBool("doRoll", true);
-        while (animatorComponent.GetBool(rollNotCompleteHash))
+        int rollCost = GlobalRollerData.Instance.LuckPerMachine[_slotMachineId].RollCost;
+        if (GlobalData.Instance.PlayerMoney < rollCost)
         {
-            yield return null;
+            animatorComponent.SetBool(doFailedRollEndHash, true);
+            animatorComponent.SetBool(doFailedRollHash, true);
+            while (animatorComponent.GetBool(doFailedRollEndHash))
+            {
+                yield return null;
+            }
         }
+        GlobalData.Instance.PlayerMoney -= rollCost;
+        animatorComponent.SetBool(doRollEndHash, true);
+        animatorComponent.SetBool(doRollHash, true);
         RollerSymbol rollerSymbol1, rollerSymbol2, rollerSymbol3;
         rollerSymbol1 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
         roller1.StartSpin(rollerSymbol1);
