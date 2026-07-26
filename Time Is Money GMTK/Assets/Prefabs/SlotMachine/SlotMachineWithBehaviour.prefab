@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7700377655004244909}
   - component: {fileID: 483010852576884909}
   - component: {fileID: 696211112968032666}
+  - component: {fileID: 6017766485740918160}
   m_Layer: 0
   m_Name: Mesh_Handle
   m_TagString: Untagged
@@ -90,6 +91,18 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6017766485740918160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258228714068527397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c8728c6afbdc74a86a32c330ad1a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RollerHandle
 --- !u!1 &2782169752095759184
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,8 +316,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -714975523338018433, guid: 12e6599454aa2aa4c8c71620acc0fa50, type: 3}
-  - {fileID: -4027288218715474286, guid: 12e6599454aa2aa4c8c71620acc0fa50, type: 3}
+  - {fileID: 2100000, guid: 7925f3c343f4aa441ae6703dcd70ca8c, type: 2}
+  - {fileID: 2100000, guid: 7925f3c343f4aa441ae6703dcd70ca8c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
