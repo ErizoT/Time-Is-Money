@@ -80,7 +80,7 @@ public class ShopLogic : MonoBehaviour
 
         var slowTime = shopOptions["slowTime"];
 
-        playerData.playerMoney -= slowTime.Cost;
+        playerData.PlayerMoney -= slowTime.Cost;
         playerData.timeTickRate /= 2;
         slowTime.Cost = Mathf.FloorToInt(slowTime.CostMultiplier * slowTime.Cost);
     }
@@ -96,7 +96,7 @@ public class ShopLogic : MonoBehaviour
         var speedLuck = shopOptions["speedLuck"];
 
         playerData.timeTickRate *= 1.25f;
-        playerData.playerLuck *= 2;
+        playerData.PlayerLuck *= 2;
     }
 
    public void BuyLuck()
@@ -110,8 +110,8 @@ public class ShopLogic : MonoBehaviour
 
         var buyLuck = shopOptions["buyLuck"];
 
-        playerData.playerMoney -= buyLuck.Cost;
-        playerData.playerLuck += 0.5f;
+        playerData.PlayerMoney -= buyLuck.Cost;
+        playerData.PlayerLuck += 0.5f;
     }
 
     public void IncreaseItemWeight(int symbolID)
@@ -120,7 +120,7 @@ public class ShopLogic : MonoBehaviour
 
         var symbolBuy = shopOptions["increaseItemWeight"];
 
-        playerData.playerMoney -= symbolBuy.Cost;
+        playerData.PlayerMoney -= symbolBuy.Cost;
         // Insert code here to make a symbol appear more
     }
 
@@ -140,7 +140,7 @@ public class ShopLogic : MonoBehaviour
 
         var removeSymbol = shopOptions["removeSymbol"];
 
-        playerData.playerMoney -= removeSymbol.Cost;
+        playerData.PlayerMoney -= removeSymbol.Cost;
         // Remove a symbol from the slot machine
         rollerData.RollerSymbols[symbolID].Weight 
     }
