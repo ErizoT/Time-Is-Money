@@ -16,9 +16,9 @@ MonoBehaviour:
   SymbolSprite: {fileID: 0}
   symbolCount: 0
   SymbolCount: 0
-  symbolSingleValue: 0
-  SymbolSingleValue: 0
-  symbolTripleValue: 5
-  SymbolTripleValue: 5
-  luckWeight: 0
-  LuckWeight: 0
+  symbolSingleValue: 30
+  SymbolSingleValue: 30
+  symbolTripleValue: 240
+  SymbolTripleValue: 240
+  luckWeight: 1
+  LuckWeight: 1

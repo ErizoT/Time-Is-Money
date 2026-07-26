@@ -5,10 +5,10 @@ public class RollerSymbol_Time : RollerSymbol, IWeightedListEntry
 {
     public override void DoSingleEffect()
     {
-        GlobalData.Instance.PlayerTime *= SymbolSingleValue;
+        GlobalData.Instance.PlayerTime += SymbolSingleValue;
     }
     public override void DoTripleEffect()
     {
-        GlobalData.Instance.PlayerTime *= SymbolTripleValue;
+        GlobalData.Instance.PlayerTime += SymbolTripleValue;
     }
 }

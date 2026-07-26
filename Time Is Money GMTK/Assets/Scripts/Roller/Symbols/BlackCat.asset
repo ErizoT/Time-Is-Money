@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b7657da64c6bd34a8bf55110057d8bd, type: 3}
-  m_Name: RollerSymbol_Luck
+  m_Name: BlackCat
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Luck
-  symbolId: 
+  symbolId: black_cat
   SymbolSprite: {fileID: 0}
-  symbolCount: 0
+  symbolCount: 1
   SymbolCount: 0
-  symbolSingleValue: 0
+  symbolSingleValue: -1
   SymbolSingleValue: 0
-  symbolTripleValue: 5
+  symbolTripleValue: -5
   SymbolTripleValue: 5
-  luckWeight: 0
+  luckWeight: -1
   LuckWeight: 0
