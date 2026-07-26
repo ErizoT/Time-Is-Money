@@ -33,7 +33,6 @@ public class RollerWheel : MonoBehaviour
     }
     public void StartSpin(RollerSymbol result)
     {
-        Debug.Log($"IsSpinning?: {IsSpinning}");
         if (IsSpinning) return;
         importantDisplay.QueueRollerSymbol(result);
         foreach (var roller in rollerIconDisplays)
@@ -41,17 +40,16 @@ public class RollerWheel : MonoBehaviour
             roller.QueueRollerSymbol(GlobalData.Instance.rollerData.LuckPerMachine[MachineId].RollRandomSymbol());
         }
         StartCoroutine(BeginSpin());
-        Debug.Log("Coroutine started!");
     }
     public void StopSpin()
     {
-        Debug.Log("Stopping spin!");
         continueSpinning = false;
     }
     IEnumerator BeginSpin()
     {
         _isSpinning = true;
         continueSpinning = true;
+
         Vector3 spinStep = Vector3.zero;
         while (continueSpinning)
         {
