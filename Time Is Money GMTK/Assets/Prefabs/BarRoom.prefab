@@ -213,7 +213,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1430,17 +1430,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1642213394878779474}
     m_Modifications:
+    - target: {fileID: 2024653942587945024, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024653942587945024, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024653942587945024, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 3782516155095890323, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
       propertyPath: m_Name
       value: Phone
       objectReference: {fileID: 0}
     - target: {fileID: 7695935175311681196, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.038
+      value: -0.06
       objectReference: {fileID: 0}
     - target: {fileID: 7695935175311681196, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.035
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 7695935175311681196, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1505,9 +1517,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhoneController
   moveTarget: {fileID: 8313735488389803365}
-  moveDistance: -5
+  moveDistance: -1
   upCurve:
-    duration: 1
+    duration: 0.5
     upCurve:
       serializedVersion: 2
       m_Curve:
@@ -1533,7 +1545,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   downCurve:
-    duration: 1
+    duration: 0.3
     upCurve:
       serializedVersion: 2
       m_Curve:
