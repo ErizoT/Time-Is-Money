@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: BlackCat
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Luck
   symbolId: black_cat
+  symbolDescription: Looks friendly!
   SymbolSprite: {fileID: 0}
   symbolCount: 1
-  SymbolCount: 0
+  SymbolCount: 1
   symbolSingleValue: -1
-  SymbolSingleValue: 0
+  SymbolSingleValue: -1
   symbolTripleValue: -5
-  SymbolTripleValue: 5
+  SymbolTripleValue: -5
   luckWeight: -1
-  LuckWeight: 0
+  LuckWeight: -1

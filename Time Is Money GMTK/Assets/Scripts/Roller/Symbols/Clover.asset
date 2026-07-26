@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7657da64c6bd34a8bf55110057d8bd, type: 3}
   m_Name: Clover
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Luck
-  symbolId: 
+  symbolId: clover
+  symbolDescription: As lucky as it is invasive.
   SymbolSprite: {fileID: 0}
   symbolCount: 5
   SymbolCount: 5

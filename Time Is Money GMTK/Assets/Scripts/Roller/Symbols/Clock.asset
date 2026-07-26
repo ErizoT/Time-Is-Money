@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cdebe6e979bc541af67b2f22ab85d8, type: 3}
   m_Name: Clock
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Time
-  symbolId: 
+  symbolId: clock
+  symbolDescription: The bane of the office worker.
   SymbolSprite: {fileID: 0}
   symbolCount: 0
   SymbolCount: 0
@@ -20,5 +21,5 @@ MonoBehaviour:
   SymbolSingleValue: 30
   symbolTripleValue: 240
   SymbolTripleValue: 240
-  luckWeight: 1
-  LuckWeight: 1
+  luckWeight: 0.5
+  LuckWeight: 0.5
