@@ -10,7 +10,9 @@ public class RollSimulator : MonoBehaviour
     {
         for (int i = 0; i < rollCount; i++)
         {
-
+            var rollerSymbol1 = GlobalData.RollerData.MachineData.RollRandomSymbol();
+            var rollerSymbol2 = GlobalData.RollerData.MachineData.RollRandomSymbol();
+            var rollerSymbol3 = GlobalData.RollerData.MachineData.RollRandomSymbol();
         }
     }
 }

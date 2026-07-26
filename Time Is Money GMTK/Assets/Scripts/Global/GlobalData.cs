@@ -12,7 +12,6 @@ public class GlobalData : SingletonBehaviour<GlobalData>
     public GlobalGameState State;
 
     private float playerTime;
-
     public float PlayerTime
     {
         get => playerTime;
@@ -35,6 +34,17 @@ public class GlobalData : SingletonBehaviour<GlobalData>
         }
     }
     public Action<int> OnPlayerMoneyChanged;
+    [SerializeField] private int paidDebt = 0;
+    public int PaidDebt
+    {
+        get => paidDebt;
+        set
+        {
+            OnDebtPaid?.Invoke(value);
+            paidDebt = value;
+        }
+    }
+    public Action<int> OnDebtPaid;
     public float timeTickRate = 1;
     public float initialRoundDuration = 300;
     private float playerLuck;

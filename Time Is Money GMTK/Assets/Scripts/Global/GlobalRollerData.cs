@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class GlobalRollerData : MonoBehaviour
     private int SlotMachineCount = 3;
     public RollerSymbol[] RollerSymbols;
     public Dictionary<string, RollerSymbol> RollerSymbolsPerId = new Dictionary<string, RollerSymbol>();
+    public event Action<bool> OnRollerStateChanged;
     public LuckData MachineData => LuckPerMachine[0];
     public LuckData[] LuckPerMachine;
     public class LuckData
@@ -72,6 +74,7 @@ public class GlobalRollerData : MonoBehaviour
             RollerSymbols = new WeightedList<RollerOption>(rollerOptions);
         }
     }
+    public void NotifyRollerStateChanged(bool newState) => OnRollerStateChanged?.Invoke(newState);
     public void RecalculateAll()
     {
         foreach (LuckData luckData in LuckPerMachine) {
@@ -87,7 +90,7 @@ public class GlobalRollerData : MonoBehaviour
         LuckPerMachine = new LuckData[SlotMachineCount];
         for (int i = 0; i < SlotMachineCount; i++)
         {
-            LuckPerMachine[i] = new LuckData(Random.Range(0.5f, 1.5f));
+            LuckPerMachine[i] = new LuckData(UnityEngine.Random.Range(0.5f, 1.5f));
         }
     }
 }

@@ -19,6 +19,7 @@ public class RollerDisplay : MonoBehaviour
         get => _isRolling; 
         set { 
             OnIsRollingChanged?.Invoke(value);
+            GlobalRollerData.Instance.NotifyRollerStateChanged(value);
             _isRolling = value; 
         } 
     }
