@@ -15,7 +15,7 @@ public class GlobalRollerData : MonoBehaviour
     public class LuckData
     {
         public int RollerDelay = 5;
-        public int CountdownDelay = 1;
+        public float CountdownDelay = 1;
         public int RollCost = 10;
         private float _rollerLuck;
         public float RollerLuck 
