@@ -66,10 +66,21 @@ public class UIController : MonoBehaviour
         GlobalData.Instance.State.SM.SubscribeEnterAny(OnEnterAny);
         GlobalData.Instance.State.SM.SubscribeExitAny(OnExitAny);
 
-
+        GlobalRollerData.Instance.OnRollerStateChanged += OnRollerStateChanged;
 
     }
 
+    void OnRollerStateChanged(bool rolling)
+    {
+        if (rolling)
+        {
+            switchButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            switchButton.gameObject.SetActive(true);
+        }
+    }
 
     public void OnSwitchButtonPressed()
     {
