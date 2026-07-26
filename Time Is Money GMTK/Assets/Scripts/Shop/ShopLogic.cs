@@ -34,6 +34,7 @@ public class ShopLogic : MonoBehaviour
     public GlobalRollerData rollerData => GlobalRollerData.Instance; // The script that contains stuff regarding the slot machine.
 
     private int timesRerolled; // The number of time rerolled. Basically used for one interaction just for rerolling the first time
+    private bool boughtAbility; // If the player has bought an ability or not
 
     void Start()
     {
@@ -68,9 +69,10 @@ public class ShopLogic : MonoBehaviour
     {
         // Reroll the shop
 
-        if (timesRerolled == 0 || playerData.PlayerMoney >= 50)
+        if (timesRerolled == 0 || playerData.PlayerMoney >= 50 || boughtAbility == true)
         {
-            if (playerData.PlayerMoney >= 50 && timesRerolled > 0) { playerData.PlayerMoney -= 50; } // If the player has enough money for a reroll, pay 50 bucks
+            if (playerData.PlayerMoney >= 50 && timesRerolled > 0 && boughtAbility == false) { playerData.PlayerMoney -= 50; } // If the player has enough money for a reroll, pay 50 bucks
+            boughtAbility = false;
             timesRerolled += 1;
 
             List<Func<ShopOption>> list = shopOptionFactories.Values.ToList();
@@ -135,6 +137,7 @@ public class ShopLogic : MonoBehaviour
         {
             playerData.timeTickRate *= 1.25f;
             playerData.PlayerLuck *= 2;
+            boughtAbility = true; Reroll();
         }
         else
         {
@@ -157,6 +160,7 @@ public class ShopLogic : MonoBehaviour
         {
             playerData.PlayerMoney -= buyLuck.Cost;
             playerData.PlayerLuck += 0.5f;
+            boughtAbility = true; Reroll();
         }
         else
         {
@@ -174,6 +178,7 @@ public class ShopLogic : MonoBehaviour
         {
             playerData.PlayerMoney -= symbolBuy.Cost;
             rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight + 10, 0);
+            boughtAbility = true; Reroll();
         }
         else
         {
@@ -202,6 +207,7 @@ public class ShopLogic : MonoBehaviour
             playerData.PlayerMoney -= decreaseItemWeight.Cost;
             // Decrease symbol weight
             rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight - 10, 0);
+            boughtAbility = true; Reroll();
         }
         else
         {
@@ -212,12 +218,13 @@ public class ShopLogic : MonoBehaviour
     public void SpeedSlots()
     {
         // Player can spend money to remove a symbol from the slot machine
-        var speedSlots = shopOptionFactories["decreaseItemWeight"].Invoke();
+        var speedSlots = shopOptionFactories["speedSlots"].Invoke();
 
         if (playerData.PlayerMoney >= speedSlots.Cost)
         {
             playerData.PlayerMoney -= speedSlots.Cost;
-            //rollerData.MachineData
+            rollerData.MachineData.RollerDelay -= 4;
+            boughtAbility = true; Reroll();
         }
         else
         {
