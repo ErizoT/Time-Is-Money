@@ -1,14 +1,17 @@
+using KLRB.Utility;
 using System;
 using System.Security.Cryptography;
 using UnityEngine;
 
-public class GlobalData : MonoBehaviour
+public class GlobalData : SingletonBehaviour<GlobalData>
 {
-    public static GlobalData Instance;
+   
     public static GlobalRollerData RollerData => Instance.rollerData;
     public GlobalRollerData rollerData;
-    public static GlobalGameState GameState => Instance.gameState;
-    public GlobalGameState gameState;
+
+    
+    public static GlobalGameState GameState => Instance.State;
+    public GlobalGameState State;
 
     public int playerTime;
     public int playerMoney;
@@ -25,8 +28,6 @@ public class GlobalData : MonoBehaviour
 
     public void Start()
     {
-        if (Instance != null && Instance != this) return;
-        Instance = this;
         DontDestroyOnLoad(gameObject);
         UnityEngine.Random.InitState(RandomNumberGenerator.GetInt32(int.MaxValue));
         rollerData.Initialise();

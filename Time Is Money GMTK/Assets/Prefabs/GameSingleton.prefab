@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalData
   rollerData: {fileID: 7797733575925879726}
-  gameState: {fileID: 3768306927648173714}
+  State: {fileID: 3768306927648173714}
   playerTime: 60
   playerMoney: 100
   timeTickRate: 1

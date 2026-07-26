@@ -8,7 +8,15 @@ namespace KLRB.Utility
     {
 
         private static T _singleton;
-        public static T Singleton => _singleton;
+        public static T Instance
+        {
+            get
+            {
+                if (_singleton == null) _singleton = GameObject.FindAnyObjectByType<T>();
+                return _singleton;
+            }
+        }
+
 
         protected virtual void Awake()
         {
