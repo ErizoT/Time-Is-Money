@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8308654333852505514}
   - component: {fileID: 9111259254664935674}
   - component: {fileID: 7797733575925879726}
+  - component: {fileID: 3768306927648173714}
   m_Layer: 0
   m_Name: GameSingleton
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalData
   rollerData: {fileID: 7797733575925879726}
+  gameState: {fileID: 3768306927648173714}
   playerTime: 60
   playerMoney: 100
   timeTickRate: 1
@@ -68,3 +70,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3c113330510ffee49a55d65b580f8ddb, type: 2}
   - {fileID: 11400000, guid: 94fc9d40b3a48484a8cf76b2c1915a21, type: 2}
   - {fileID: 11400000, guid: 0e225fad66550424b941466359d5ebbf, type: 2}
+--- !u!114 &3768306927648173714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5870993203681354451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b3af8d1ca5bff4d92bab02903a5a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalGameState

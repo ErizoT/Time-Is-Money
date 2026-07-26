@@ -7,6 +7,8 @@ public class GlobalData : MonoBehaviour
     public static GlobalData Instance;
     public static GlobalRollerData RollerData => Instance.rollerData;
     public GlobalRollerData rollerData;
+    public static GlobalGameState GameState => Instance.gameState;
+    public GlobalGameState gameState;
 
     public int playerTime;
     public int playerMoney;
