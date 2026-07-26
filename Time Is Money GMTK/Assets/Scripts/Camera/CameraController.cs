@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using UnityEditor.PackageManager;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -11,12 +12,21 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
  
-        GlobalData.Instance.State.SM.SubscribeEnter(GameState.StartScreen, () => animator.Play("Start Screen"));
-        GlobalData.Instance.State.SM.SubscribeEnter(GameState.Slots, () => animator.Play("Slot Machine"));
-        GlobalData.Instance.State.SM.SubscribeEnter(GameState.Shop, () => animator.Play("Phone"));
-
+        GlobalData.Instance.State.SM.SubscribeEnterAny(OnEnter);
+ 
     }
 
+    void OnEnter(GameState state)
+    {
+      string animatorState = state switch {
+          GameState.StartScreen => "Start Screen",
+          GameState.TransitionToSlots => "Slot Machine",
+          GameState.Slots => "Slot Machine",
+          GameState.Shop => "Phone",
+          _ => "Start Screen"};
+
+        animator.Play(animatorState);
+    }
 
    
 

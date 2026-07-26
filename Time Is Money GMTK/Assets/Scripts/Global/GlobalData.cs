@@ -9,7 +9,6 @@ public class GlobalData : SingletonBehaviour<GlobalData>
    
     public static GlobalRollerData RollerData => Instance.rollerData;
     public GlobalRollerData rollerData;
-    public static GlobalGameState GameState => Instance.State;
     public GlobalGameState State;
 
     private float playerTime;
@@ -54,15 +53,31 @@ public class GlobalData : SingletonBehaviour<GlobalData>
         DontDestroyOnLoad(gameObject);
         UnityEngine.Random.InitState(RandomNumberGenerator.GetInt32(int.MaxValue));
         rollerData.Initialise();
+
     }
 
+  
     public void StartGame()
     {
-        gameCommenced = true;
-        playerTime = initialRoundDuration;
+        State.SM.ChangeState(GameState.TransitionToSlots);
+        StartCoroutine(WaitForStart());
     }
 
-     void Update()
+    public IEnumerator WaitForStart()
+    {
+        yield return new WaitForSeconds(3);
+        GlobalData.Instance.State.SM.ChangeState(GameState.Slots);
+        StartTimer();
+    }
+
+    public void StartTimer()
+    {
+        gameCommenced = true;
+        PlayerTime = initialRoundDuration;
+    }
+
+
+    void Update()
     {
         Tick();
     }
@@ -70,8 +85,8 @@ public class GlobalData : SingletonBehaviour<GlobalData>
     void Tick()
     {
         if (!gameCommenced) return;
-        playerTime -= Time.deltaTime * timeTickRate;
-        if(playerTime <= 0)
+        PlayerTime -= Time.deltaTime * timeTickRate;
+        if(PlayerTime <= 0)
         {
             GameOver();
         }
