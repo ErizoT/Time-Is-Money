@@ -33,6 +33,8 @@ public class ShopLogic : MonoBehaviour
 
     public GlobalRollerData rollerData => GlobalRollerData.Instance; // The script that contains stuff regarding the slot machine.
 
+    private int timesRerolled; // The number of time rerolled. Basically used for one interaction just for rerolling the first time
+
     void Start()
     {
         buttons = GetComponentsInChildren<ButtonDetails>();
@@ -65,8 +67,11 @@ public class ShopLogic : MonoBehaviour
     {
         // Reroll the shop
 
-        if (playerData.PlayerMoney < 50)
+        if (timesRerolled == 0 || playerData.PlayerMoney >= 50)
         {
+            if (playerData.PlayerMoney >= 50 && timesRerolled > 0) { playerData.PlayerMoney -= 50; } // If the player has enough money for a reroll, pay 50 bucks
+            timesRerolled += 1;
+
             List<Func<ShopOption>> list = shopOptionFactories.Values.ToList();
             int[] ints = new int[list.Count];
             for (int i = 0; i < ints.Length; i++)
@@ -89,7 +94,7 @@ public class ShopLogic : MonoBehaviour
             }
         } else
         {
-            Debug.Log("Don't have enough money to reroll!");
+            Debug.LogError("Reroll didn't work for some reason");
         }
     }
 

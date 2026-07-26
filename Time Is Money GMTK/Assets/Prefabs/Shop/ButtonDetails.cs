@@ -23,6 +23,6 @@ public class ButtonDetails : MonoBehaviour
     public void PerformUpgrade()
     {
         action();
-        Debug.Log("just performed " + action);
+        //Debug.Log("just performed " + action);
     }
 }
