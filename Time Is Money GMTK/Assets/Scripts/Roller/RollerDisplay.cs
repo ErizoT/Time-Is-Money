@@ -68,6 +68,10 @@ public class RollerDisplay : MonoBehaviour
         GlobalData.Instance.PlayerMoney -= rollCost;
         animatorComponent.SetBool(doRollEndHash, true);
         animatorComponent.SetBool(doRollHash, true);
+        while (animatorComponent.GetBool(doRollHash))
+        {
+            yield return null;
+        }
         RollerSymbol rollerSymbol1, rollerSymbol2, rollerSymbol3;
         rollerSymbol1 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
         roller1.StartSpin(rollerSymbol1);
