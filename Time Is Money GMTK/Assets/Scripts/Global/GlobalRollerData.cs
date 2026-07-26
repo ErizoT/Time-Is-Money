@@ -90,7 +90,7 @@ public class GlobalRollerData : MonoBehaviour
         LuckPerMachine = new LuckData[SlotMachineCount];
         for (int i = 0; i < SlotMachineCount; i++)
         {
-            LuckPerMachine[i] = new LuckData(Random.Range(0.5f, 1.5f));
+            LuckPerMachine[i] = new LuckData(UnityEngine.Random.Range(0.5f, 1.5f));
         }
     }
 }
