@@ -23,8 +23,8 @@ public class CameraController : MonoBehaviour
           GameState.TransitionToSlots => "Slot Machine",
           GameState.Slots => "Slot Machine",
           GameState.Shop => "Phone",
-          _ => "Start Screen"};
-
+          _ => ""};
+        if (string.IsNullOrEmpty(animatorState)) return;
         animator.Play(animatorState);
     }
 

@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     public Transform switchButton;
     public Transform timer;
     public Transform money;
+    public Transform gameOver;
 
 
     public bool timerIsActive => GlobalData.Instance.State.Current == GameState.Shop ||
@@ -46,6 +47,19 @@ public class UIController : MonoBehaviour
         {
             switchButton.gameObject.SetActive(false);
         });
+
+
+        GlobalData.Instance.State.SM.SubscribeEnter(GameState.GameOver, () =>
+        {
+            gameOver.gameObject.SetActive(true);
+        });
+
+
+        GlobalData.Instance.State.SM.SubscribeExit(GameState.GameOver, () =>
+        {
+            gameOver.gameObject.SetActive(false);
+        });
+
 
         GlobalData.Instance.State.SM.SubscribeEnterAny(OnEnterAny);
         GlobalData.Instance.State.SM.SubscribeExitAny(OnExitAny);
