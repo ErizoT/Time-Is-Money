@@ -137,11 +137,10 @@ public class ShopLogic : MonoBehaviour
     public void DecreaseItemWeight(int symbolID)
     {
         // Player can spend money to remove a symbol from the slot machine
-
         var removeSymbol = shopOptions["removeSymbol"];
 
         playerData.PlayerMoney -= removeSymbol.Cost;
         // Remove a symbol from the slot machine
-        rollerData.RollerSymbols[symbolID].Weight 
+        rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight-10,0);
     }
 }
