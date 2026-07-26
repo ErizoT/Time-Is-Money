@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public struct WeightedList<T> where T : IWeightedListEntry
         for (int i = 0; i < itemsToWeight.Count; i++)
         {
             var item = itemsToWeight[i];
-            TotalWeight += item.Weight;
+            TotalWeight += Mathf.Max(item.Weight,0);
             array[i] = new WeightedEntry(
                 TotalWeight,
                 item
@@ -56,10 +57,12 @@ public struct WeightedList<T> where T : IWeightedListEntry
         return array[low].Item;
     }
     #if UNITY_EDITOR
-    public void DumpContents()
+    public void DumpContents(Func<T,string> stringConverter)
     {
+        int prevWeight = 0;
         for(int i = 0; i < array.Length; i++) {
-            Debug.Log($"Item #{i}: {array[i].Item}, weight {array[i].CumulativeWeight}");
+            Debug.Log($"Item #{i}: {stringConverter(array[i].Item)}, weight {array[i].CumulativeWeight - prevWeight}");
+            prevWeight = array[i].CumulativeWeight;
         }
     }
     #endif

@@ -10,10 +10,6 @@ public class RollerDisplay : MonoBehaviour
     [SerializeField]
     int _slotMachineId;
     int SlotMachineId => _slotMachineId;
-    [SerializeField]
-    float RollerDelay = 8f;
-    [SerializeField]
-    float CountdownDelay = 0.75f;
     bool _isRolling = false;
     public bool IsRolling {
         get => _isRolling; 
@@ -49,18 +45,19 @@ public class RollerDisplay : MonoBehaviour
     }
     public void DoRoll()
     {
-        if (IsRolling) { return; }
-        if (GlobalData.Instance.PlayerMoney < GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollCost) { return; }
+        if (IsRolling) {
+            animatorComponent.SetBool(doFailedRollHash, true);
+            return;
+        }
         StartCoroutine(PerformRoll());
     }
     IEnumerator PerformRoll()
     {
+        GlobalData.RollerData.LuckPerMachine[SlotMachineId].Recalculate();
         IsRolling = true;
         int rollCost = GlobalRollerData.Instance.LuckPerMachine[_slotMachineId].RollCost;
         if (GlobalData.Instance.PlayerMoney < rollCost && false)
         {
-            animatorComponent.SetBool(doFailedRollEndHash, true);
-            animatorComponent.SetBool(doFailedRollHash, true);
             while (animatorComponent.GetBool(doFailedRollEndHash))
             {
                 yield return null;
@@ -77,19 +74,29 @@ public class RollerDisplay : MonoBehaviour
         }
         RollerSymbol rollerSymbol1, rollerSymbol2, rollerSymbol3;
         rollerSymbol1 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
-        roller1.StartSpin(rollerSymbol1);
-        yield return null;
         rollerSymbol2 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
-        roller2.StartSpin(rollerSymbol2);
-        yield return null;
         rollerSymbol3 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
+        if (rollerSymbol1.SymbolId == rollerSymbol3.SymbolId)
+        {
+            (rollerSymbol3, rollerSymbol2) = (rollerSymbol2, rollerSymbol3); //gotta be the scummiest code I've ever written
+        }
+        roller1.StartSpin(rollerSymbol1);
+        roller2.StartSpin(rollerSymbol2);
         roller3.StartSpin(rollerSymbol3);
-        yield return new WaitForSeconds(RollerDelay * GlobalData.Instance.timeTickRate);
-        float countdownDelay = CountdownDelay * GlobalData.Instance.timeTickRate;
+        yield return new WaitForSeconds(GlobalRollerData.Instance.MachineData.RollerDelay);
+        float countdownDelay = GlobalRollerData.Instance.MachineData.CountdownDelay;
         roller1.StopSpin();
         yield return new WaitForSeconds(countdownDelay);
         roller2.StopSpin();
-        yield return new WaitForSeconds(countdownDelay);
+        if (rollerSymbol1.SymbolId == rollerSymbol2.SymbolId)
+        {
+            yield return new WaitForSeconds(countdownDelay * 1.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(countdownDelay);
+        }
+        
         roller3.StopSpin();
         if (rollerSymbol1.SymbolId == rollerSymbol2.SymbolId && rollerSymbol2.SymbolId == rollerSymbol3.SymbolId) 
         {

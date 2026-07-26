@@ -14,6 +14,8 @@ public class GlobalRollerData : MonoBehaviour
     public LuckData[] LuckPerMachine;
     public class LuckData
     {
+        public int RollerDelay = 5;
+        public int CountdownDelay = 1;
         public int RollCost = 10;
         private float _rollerLuck;
         public float RollerLuck 
@@ -37,11 +39,11 @@ public class GlobalRollerData : MonoBehaviour
                 _weight = weight;
             }
         }
-        private WeightedList<RollerOption> RollerSymbols;
+        public WeightedList<RollerOption> RollerSymbolsWeightedList;
         public int RollRandomSymbolId()
         {
-            int randomInt = UnityEngine.Random.Range(0, RollerSymbols.TotalWeight);
-            return RollerSymbols.GetRandom(randomInt).SymbolId;
+            int randomInt = UnityEngine.Random.Range(0, RollerSymbolsWeightedList.TotalWeight);
+            return RollerSymbolsWeightedList.GetRandom(randomInt).SymbolId;
         }
         public RollerSymbol RollRandomSymbol()
         {
@@ -54,6 +56,10 @@ public class GlobalRollerData : MonoBehaviour
         public LuckData(float rollerLuck)
         {
             Recalculate(rollerLuck);
+        }
+        public void Recalculate()
+        {
+            Recalculate(RollerLuck);
         }
         public void Recalculate(float rollerLuck)
         {
@@ -71,7 +77,7 @@ public class GlobalRollerData : MonoBehaviour
                 
                 rollerOptions[i] = new RollerOption(i, calculatedWeight);
             }
-            RollerSymbols = new WeightedList<RollerOption>(rollerOptions);
+            RollerSymbolsWeightedList = new WeightedList<RollerOption>(rollerOptions);
         }
     }
     public void NotifyRollerStateChanged(bool newState) => OnRollerStateChanged?.Invoke(newState);

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Luck
   symbolId: black_cat
   symbolDescription: Looks friendly!
-  SymbolSprite: {fileID: 0}
+  SymbolSprite: {fileID: 21300000, guid: f22459f355b35c64681972eb4c74aa2c, type: 3}
   symbolCount: 1
   SymbolCount: 1
-  symbolSingleValue: -1
+  symbolSingleValue: -0.25
   SymbolSingleValue: -1
-  symbolTripleValue: -5
+  symbolTripleValue: -1
   SymbolTripleValue: -5
   luckWeight: -1
   LuckWeight: -1
