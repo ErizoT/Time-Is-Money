@@ -56,7 +56,7 @@ public class GlobalRollerData : MonoBehaviour
             RollerSymbol[] rollerSymbols = Instance.RollerSymbols;
             _rollerLuck = rollerLuck;
             RollerOption[] rollerOptions = new RollerOption[rollerSymbols.Length];
-            float luckCoefficient = rollerLuck * GlobalData.Instance.playerLuck;
+            float luckCoefficient = rollerLuck * GlobalData.Instance.PlayerLuck;
             for (int i = 0; i < rollerSymbols.Length; i++)
             {
                 int calculatedWeight = rollerSymbols[i].Weight;
@@ -68,6 +68,12 @@ public class GlobalRollerData : MonoBehaviour
                 rollerOptions[i] = new RollerOption(i, calculatedWeight);
             }
             RollerSymbols = new WeightedList<RollerOption>(rollerOptions);
+        }
+    }
+    public void RecalculateAll()
+    {
+        foreach (LuckData luckData in LuckPerMachine) {
+            luckData.Recalculate(luckData.RollerLuck);
         }
     }
     public void Initialise()

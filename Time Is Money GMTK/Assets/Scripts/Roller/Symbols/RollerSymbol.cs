@@ -12,7 +12,7 @@ public class RollerSymbol : ScriptableObject, IWeightedListEntry
     protected int symbolCount;
     [HideInInspector]
     public int SymbolCount;
-    public int Weight => SymbolCount;
+    public int Weight { get => SymbolCount; set => symbolCount = value; }
     [SerializeField]
     protected int symbolSingleValue = 0;
     [HideInInspector]
@@ -28,11 +28,11 @@ public class RollerSymbol : ScriptableObject, IWeightedListEntry
 
     public virtual void DoSingleEffect()
     {
-        GlobalData.Instance.playerMoney += SymbolSingleValue;
+        GlobalData.Instance.PlayerMoney += SymbolSingleValue;
     }
     public virtual void DoTripleEffect()
     {
-        GlobalData.Instance.playerMoney += SymbolTripleValue;
+        GlobalData.Instance.PlayerMoney += SymbolTripleValue;
     }
 
     public void OnEnable()

@@ -8,15 +8,33 @@ public class GlobalData : SingletonBehaviour<GlobalData>
    
     public static GlobalRollerData RollerData => Instance.rollerData;
     public GlobalRollerData rollerData;
-
-    
     public static GlobalGameState GameState => Instance.State;
     public GlobalGameState State;
 
-    public int playerTime;
-    public int playerMoney;
+    private int playerTime;
+    public int PlayerTime
+    {
+        get => playerTime;
+        set
+        {
+            OnPlayerTimeChanged?.Invoke(value);
+            playerTime = value;
+        }
+    }
+    public Action<int> OnPlayerTimeChanged;
+    private int PlayerMoney;
+    public int PlayerMoney
+    {
+        get => PlayerMoney;
+        set 
+        { 
+            OnPlayerMoneyChanged?.Invoke(value);
+            PlayerMoney = value;
+        }
+    }
+    public Action<int> OnPlayerMoneyChanged;
     public float timeTickRate = 1;
-    public float playerLuck;
+    private float playerLuck;
     public float PlayerLuck { get => playerLuck; 
         set 
         {

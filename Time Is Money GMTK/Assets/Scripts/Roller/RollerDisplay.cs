@@ -15,12 +15,16 @@ public class RollerDisplay : MonoBehaviour
     [SerializeField]
     float CountdownDelay = 0.75f;
     bool _isRolling = false;
+    [SerializeField] 
+    Animator animatorComponent;
     [SerializeField]
     RollerWheel roller1;
     [SerializeField]
     RollerWheel roller2;
     [SerializeField]
     RollerWheel roller3;
+
+    private static int rollNotCompleteHash = Animator.StringToHash("rollNotComplete");
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,16 +37,21 @@ public class RollerDisplay : MonoBehaviour
     }
     public void DoRoll()
     {
-        Debug.Log("Beginning roll!");
         if (_isRolling) { return; }
         StartCoroutine(PerformRoll());
     }
     IEnumerator PerformRoll()
     {
+        _isRolling = true;
+        animatorComponent.SetBool(rollNotCompleteHash, true);
+        animatorComponent.SetBool("doRoll", true);
+        while (animatorComponent.GetBool(rollNotCompleteHash))
+        {
+            yield return null;
+        }
         RollerSymbol rollerSymbol1, rollerSymbol2, rollerSymbol3;
         rollerSymbol1 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
         roller1.StartSpin(rollerSymbol1);
-        Debug.Log("Beginning spin 1!");
         yield return null;
         rollerSymbol2 = GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollRandomSymbol();
         roller2.StartSpin(rollerSymbol2);
@@ -56,5 +65,16 @@ public class RollerDisplay : MonoBehaviour
         roller2.StopSpin();
         yield return new WaitForSeconds(countdownDelay);
         roller3.StopSpin();
+        if (rollerSymbol1 == rollerSymbol2 == rollerSymbol3) 
+        {
+            rollerSymbol1.DoTripleEffect();
+        }
+        else
+        {
+            rollerSymbol1.DoSingleEffect();
+            rollerSymbol2.DoSingleEffect();
+            rollerSymbol3.DoSingleEffect();
+        }
+        _isRolling = false;
     }
 }
