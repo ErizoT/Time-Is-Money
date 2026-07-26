@@ -8,6 +8,7 @@ public class GlobalRollerData : MonoBehaviour
     private int SlotMachineCount = 3;
     public RollerSymbol[] RollerSymbols;
     public Dictionary<string, RollerSymbol> RollerSymbolsPerId = new Dictionary<string, RollerSymbol>();
+    public LuckData MachineData => LuckPerMachine[0];
     public LuckData[] LuckPerMachine;
     public class LuckData
     {
