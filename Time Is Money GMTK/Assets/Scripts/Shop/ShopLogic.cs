@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,42 +13,68 @@ public class ShopLogic : MonoBehaviour
         public int Cost;
         public float CostMultiplier;
         public int BuyLimit;
+        public string Description;
         public void Apply() => ApplierDelegate.Invoke();
         public readonly Action ApplierDelegate;
-        public ShopOption(string name, int cost, float costMultiplier, int buyLimit, Action applierDelegate)
+        public ShopOption(string name, string description, int cost, float costMultiplier, int buyLimit, Action applierDelegate)
         {
             Name = name;
+            Description = description;
             Cost = cost;
             CostMultiplier = costMultiplier;
             BuyLimit = buyLimit;
             ApplierDelegate = applierDelegate;
         }
     }
-    public Dictionary<string, ShopOption> shopOptions;
+    //public Dictionary<string, ShopOption> shopOptions;
+    public Dictionary<string, Func<ShopOption>> shopOptionFactories;
     public ButtonDetails[] buttons;
     public GlobalData playerData => GlobalData.Instance; // The player data (current money, time, luck, etc)
 
-    public GlobalRollerData rollerData; // The script that contains stuff regarding the slot machine.
+    public GlobalRollerData rollerData => GlobalRollerData.Instance; // The script that contains stuff regarding the slot machine.
 
     void Start()
     {
         buttons = GetComponentsInChildren<ButtonDetails>();
-        shopOptions = new Dictionary<string, ShopOption>()
+        
+        /*shopOptions = new Dictionary<string, ShopOption>()
         {
-            { "slowTime", new ShopOption("slowTime", 300, 1.5f, 2, SlowTime) },
-            { "speedLuck", new ShopOption("speedLuck", 1, 3, 2, SpeedLuck) },
-            { "buyLuck", new ShopOption("buyLuck", 1, 3, 2, BuyLuck) },
-            { "increaseItemWeight", new ShopOption("increaseItemWeight", 1, 3, 2, () => IncreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
-            { "freeDoubleTime", new ShopOption("freeDoubleTime", 1, 3, 1, FreeDoubleTime) },
-            { "decreaseItemWeight", new ShopOption("decreaseItemWeigh", 1, 3, 2, () => DecreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
+            { "slowTime", new ShopOption("slowTime", "Slow time by 50%", 300, 1.5f, 2, SlowTime) },
+            { "speedLuck", new ShopOption("speedLuck", "Increase your luck, but time speeds up 25%!", 10, 3, 2, SpeedLuck) },
+            { "buyLuck", new ShopOption("buyLuck", "Increase your luck by 0.5", 75, 1.25f, 2, BuyLuck) },
+            { "increaseItemWeight", new ShopOption("increaseItemWeight", "Increase the likelihood of a symbol!", 50, 5, 2, () => IncreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
+            { "freeDoubleTime", new ShopOption("freeDoubleTime", "Time speeds up 200%, but respins become free.", 10, 3, 1, FreeDoubleTime) },
+            { "decreaseItemWeight", new ShopOption("decreaseItemWeigh", "Decrease the likelihood of a symbol", 50, 3, 2, () => DecreaseItemWeight(UnityEngine.Random.Range(0, 8)))},
+        };*/
+
+        shopOptionFactories = new Dictionary<string, Func<ShopOption>>()
+        {
+            { "slowTime", () => new ShopOption("slowTime", "Slow time by 50%", 300, 1.5f, 2, SlowTime) },
+            { "speedLuck", () => new ShopOption("speedLuck", "Increase your luck, but time speeds up 25%!", 10, 3, 2, SpeedLuck) },
+            { "buyLuck", () => new ShopOption("buyLuck", "Increase your luck by 0.5", 75, 1.25f, 2, BuyLuck) },
+            { "increaseItemWeight", 
+                () => {
+                    int rand = UnityEngine.Random.Range(0, rollerData.RollerSymbols.Length);
+                    return new ShopOption("increaseItemWeight", "Increase the likelihood of " + rollerData.RollerSymbols[rand].SymbolId, 50, 5, 2, () => IncreaseItemWeight(rand));
+                } 
+            },
+            { "freeDoubleTime", () => new ShopOption("freeDoubleTime", "Time speeds up 200%, but respins become free.", 10, 3, 1, FreeDoubleTime) },
+            { "decreaseItemWeight",
+                () => {
+                    int rand = UnityEngine.Random.Range(0, rollerData.RollerSymbols.Length); 
+                    return new ShopOption("decreaseItemWeight", "Decrease the likelihood of " + rollerData.RollerSymbols[rand].SymbolId, 50, 5, 2, () => DecreaseItemWeight(rand));
+                }
+            },
         };
+        // On start, reroll items
+        Reroll();
         
     }
 
     public void Reroll()
     {
         // Reroll the shop
-        List<ShopOption> list = shopOptions.Values.ToList();
+        List<Func<ShopOption>> list = shopOptionFactories.Values.ToList();
         int[] ints = new int[list.Count];
         for (int i = 0; i < ints.Length; i++)
         {
@@ -61,11 +88,11 @@ public class ShopLogic : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
         {
             //Button button = buttons[i];
-            ShopOption shopOption = list[ints[i]];
+            ShopOption shopOption = list[ints[i]].Invoke();
 
-            buttons[i].text.text = shopOption.Name;
+            buttons[i].text.text = shopOption.Description;
+            buttons[i].costText.text = "$" + shopOption.Cost.ToString();
             buttons[i].action = shopOption.ApplierDelegate;
-
         }
 
     }
@@ -78,7 +105,7 @@ public class ShopLogic : MonoBehaviour
 
         // Player can spend money to slow time by 50%. Cost of it will increase 3x
 
-        var slowTime = shopOptions["slowTime"];
+        var slowTime = shopOptionFactories["slowTime"].Invoke();
 
         playerData.PlayerMoney -= slowTime.Cost;
         playerData.timeTickRate /= 2;
@@ -93,7 +120,7 @@ public class ShopLogic : MonoBehaviour
 
         // Player makes time tick faster in exchange for MASSIVE luck boost
 
-        var speedLuck = shopOptions["speedLuck"];
+        var speedLuck = shopOptionFactories["speedLuck"].Invoke();
 
         playerData.timeTickRate *= 1.25f;
         playerData.PlayerLuck *= 2;
@@ -108,7 +135,7 @@ public class ShopLogic : MonoBehaviour
 
         // Player can buy general luck for better item combos, better symbols, and less bad symbols
 
-        var buyLuck = shopOptions["buyLuck"];
+        var buyLuck = shopOptionFactories["buyLuck"].Invoke();
 
         playerData.PlayerMoney -= buyLuck.Cost;
         playerData.PlayerLuck += 0.5f;
@@ -118,17 +145,17 @@ public class ShopLogic : MonoBehaviour
     {
         // Player can spend money to make a symbol appear more
 
-        var symbolBuy = shopOptions["increaseItemWeight"];
+        var symbolBuy = shopOptionFactories["increaseItemWeight"].Invoke();
 
         playerData.PlayerMoney -= symbolBuy.Cost;
-        // Insert code here to make a symbol appear more
+        rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight + 10, 0);
     }
 
     public void FreeDoubleTime()
     {
         // The player can make time go double time in exchange for free spins
 
-        var freeDoubleTime = shopOptions["freeDoubleTime"];
+        var freeDoubleTime = shopOptionFactories["freeDoubleTime"].Invoke();
         playerData.timeTickRate = 2f;
         
 
@@ -137,17 +164,10 @@ public class ShopLogic : MonoBehaviour
     public void DecreaseItemWeight(int symbolID)
     {
         // Player can spend money to remove a symbol from the slot machine
-        var removeSymbol = shopOptions["removeSymbol"];
+        var decreaseItemWeight = shopOptionFactories["decreaseItemWeight"].Invoke();
 
-        playerData.PlayerMoney -= removeSymbol.Cost;
+        playerData.PlayerMoney -= decreaseItemWeight.Cost;
         // Remove a symbol from the slot machine
         rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight-10,0);
-    }
-
-    public void SpinnerLuck()
-    {
-        // Increase your luck, but spins spinner costs more
-
-
     }
 }
