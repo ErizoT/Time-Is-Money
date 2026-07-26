@@ -83,6 +83,10 @@ public class RollerDisplay : MonoBehaviour
         {
             (rollerSymbol3, rollerSymbol2) = (rollerSymbol2, rollerSymbol3); //gotta be the scummiest code I've ever written
         }
+        else if (rollerSymbol2.SymbolId == rollerSymbol3.SymbolId) 
+        {
+            (rollerSymbol3, rollerSymbol1) = (rollerSymbol1, rollerSymbol3); //fixed case where 2 and 3 were equal
+        }
         roller1.StartSpin(rollerSymbol1);
         roller2.StartSpin(rollerSymbol2);
         roller3.StartSpin(rollerSymbol3);
