@@ -37,6 +37,7 @@ public class RollerWheel : MonoBehaviour
         importantDisplay.QueueRollerSymbol(result);
         foreach (var roller in rollerIconDisplays)
         {
+            if (roller == importantDisplay) continue;
             roller.QueueRollerSymbol(GlobalData.Instance.rollerData.LuckPerMachine[MachineId].RollRandomSymbol());
         }
         StartCoroutine(BeginSpin());
