@@ -9,6 +9,7 @@ public class MoneyUI : MonoBehaviour
 
     private void OnEnable()
     {
+        OnMoneyChanged(GlobalData.Instance.PlayerMoney);
         GlobalData.Instance.OnPlayerMoneyChanged += OnMoneyChanged;
       
     }
