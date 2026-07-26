@@ -30,5 +30,6 @@ public class DebugUI : MonoBehaviour
     }
     public void AddMoney() { GlobalData.Instance.PlayerMoney += 100; }
     public void AddLuck() { GlobalData.Instance.PlayerLuck += 1; }
+    public void RemoveAllMoney() { GlobalData.Instance.PlayerMoney = 0; }
 
 }
