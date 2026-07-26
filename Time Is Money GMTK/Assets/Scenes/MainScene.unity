@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &166532636 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4268230062127194606, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-  m_PrefabInstance: {fileID: 1973113316}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1 &616277846
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,28 +198,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1284065020 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7979858784819532590, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-  m_PrefabInstance: {fileID: 1973113316}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
---- !u!114 &1346504822 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5073577206018648915, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-  m_PrefabInstance: {fileID: 1973113316}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1 &1371847097
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,38 +403,6 @@ PrefabInstance:
     - target: {fileID: 1814125600028693756, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
       propertyPath: m_Name
       value: BarRoom
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: CustomBlends
-      value: 
-      objectReference: {fileID: 11400000, guid: eca7ee5bc67b1d64ab74d3bd48b2ea23, type: 2}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: Instructions.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: Instructions.Array.data[0].Camera
-      value: 
-      objectReference: {fileID: 1284065020}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: Instructions.Array.data[1].Camera
-      value: 
-      objectReference: {fileID: 1346504822}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: Instructions.Array.data[2].Camera
-      value: 
-      objectReference: {fileID: 166532636}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: Instructions.Array.data[0].FullHash
-      value: -1237501809
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: Instructions.Array.data[1].FullHash
-      value: -234405
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404965480674510369, guid: 0b66995816f8d4f48bffcc4b6a2986ed, type: 3}
-      propertyPath: Instructions.Array.data[2].FullHash
-      value: 12777307
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
