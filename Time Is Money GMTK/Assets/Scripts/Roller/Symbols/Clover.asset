@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RollerSymbol_Luck
   symbolId: 
   SymbolSprite: {fileID: 0}
-  symbolCount: 0
-  SymbolCount: 0
-  symbolSingleValue: 0
-  SymbolSingleValue: 0
+  symbolCount: 5
+  SymbolCount: 5
+  symbolSingleValue: 1
+  SymbolSingleValue: 1
   symbolTripleValue: 5
   SymbolTripleValue: 5
-  luckWeight: 0
-  LuckWeight: 0
+  luckWeight: 2
+  LuckWeight: 2

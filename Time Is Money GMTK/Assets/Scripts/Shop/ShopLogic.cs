@@ -126,11 +126,11 @@ public class ShopLogic : MonoBehaviour
 
     public void FreeDoubleTime()
     {
-        // The player can make time go double time in exchange for free respins
+        // The player can make time go double time in exchange for free spins
 
         var freeDoubleTime = shopOptions["freeDoubleTime"];
         playerData.timeTickRate = 2f;
-        // Re-spins become free
+        
 
     }
 
@@ -142,5 +142,12 @@ public class ShopLogic : MonoBehaviour
         playerData.PlayerMoney -= removeSymbol.Cost;
         // Remove a symbol from the slot machine
         rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight-10,0);
+    }
+
+    public void SpinnerLuck()
+    {
+        // Increase your luck, but spins spinner costs more
+
+
     }
 }

@@ -11,6 +11,7 @@ public class GlobalRollerData : MonoBehaviour
     public LuckData[] LuckPerMachine;
     public class LuckData
     {
+        public int RollCost = 10;
         private float _rollerLuck;
         public float RollerLuck 
             { get => _rollerLuck; 
