@@ -5,8 +5,10 @@ using KLRB.Utility.StateMachine;
 public enum GameState
 {
     StartScreen,
+    TransitionToSlots,
     Slots,
-    Shop
+    Shop,
+    GameOver
 }
 
 public  class GlobalGameState : MonoBehaviour

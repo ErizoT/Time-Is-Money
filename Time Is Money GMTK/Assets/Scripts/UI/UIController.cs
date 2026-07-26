@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
@@ -6,8 +7,15 @@ public class UIController : MonoBehaviour
     public Transform startScreen;
     public Transform shop;
     public Transform switchButton;
+    public Transform timer;
+    public Transform money;
 
 
+    public bool timerIsActive => GlobalData.Instance.State.Current == GameState.Shop ||
+                                 GlobalData.Instance.State.Current == GameState.Slots;
+
+    public bool moneyIsActive => GlobalData.Instance.State.Current == GameState.Shop ||
+                             GlobalData.Instance.State.Current == GameState.Slots;
     private void Awake()
     {
              
@@ -42,6 +50,8 @@ public class UIController : MonoBehaviour
         GlobalData.Instance.State.SM.SubscribeEnterAny(OnEnterAny);
         GlobalData.Instance.State.SM.SubscribeExitAny(OnExitAny);
 
+
+
     }
 
 
@@ -57,21 +67,28 @@ public class UIController : MonoBehaviour
             GlobalData.Instance.State.SM.ChangeState(GameState.Slots);
         }
     }
- 
-    public void OnStartGamePressed() => GlobalData.Instance.State.SM.ChangeState(GameState.Slots);
 
+    public void OnStartGamePressed()
+    {
+        GlobalData.Instance.StartGame();
+    }
 
     void OnEnterAny(GameState state)
     {
-     
+        if(timerIsActive) timer.gameObject.SetActive(true);
+        else timer.gameObject.SetActive(false);
+
+        if (moneyIsActive) money.gameObject.SetActive(true);
+        else money.gameObject.SetActive(false);
     }
+
+   
 
     void OnExitAny(GameState state)
     {
        
     }
 
-  
 
 
 
