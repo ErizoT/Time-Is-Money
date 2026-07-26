@@ -4,9 +4,20 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static ShopLogic;
 
 public class ShopLogic : MonoBehaviour
 {
+    public class ShopOptionFactory
+    {
+        public int BuyCount;
+        public Func<ShopOption> Factory;
+        public ShopOptionFactory(int buyCount, Func<ShopOption> factory)
+        {
+            BuyCount = buyCount;
+            Factory = factory;
+        }
+    }
     public struct ShopOption
     {
         public string Name;
@@ -27,7 +38,7 @@ public class ShopLogic : MonoBehaviour
         }
     }
     //public Dictionary<string, ShopOption> shopOptions;
-    public Dictionary<string, Func<ShopOption>> shopOptionFactories;
+    public Dictionary<string, ShopOptionFactory> shopOptionFactories;
     public ButtonDetails[] buttons;
     public GlobalData playerData => GlobalData.Instance; // The player data (current money, time, luck, etc)
 
@@ -40,25 +51,25 @@ public class ShopLogic : MonoBehaviour
     {
         buttons = GetComponentsInChildren<ButtonDetails>();
 
-        shopOptionFactories = new Dictionary<string, Func<ShopOption>>()
+        shopOptionFactories = new Dictionary<string, ShopOptionFactory>()
         {
-            { "slowTime", () => new ShopOption("slowTime", "Slow time by 50%", 300, 1.5f, 2, SlowTime) },
-            { "speedLuck", () => new ShopOption("speedLuck", "Increase your luck, but time speeds up 25%!", 10, 3, 2, SpeedLuck) },
-            { "buyLuck", () => new ShopOption("buyLuck", "Increase your luck by 0.5", 75, 1.25f, 2, BuyLuck) },
-            { "increaseItemWeight", 
-                () => {
+            { "slowTime", new ShopOptionFactory(0, () => new ShopOption("slowTime", "Slow time by 50%", 300, 1.5f, 2, SlowTime)) },
+            { "speedLuck", new ShopOptionFactory(0, () => new ShopOption("speedLuck", "Increase your luck, but time speeds up 25%!", 10, 3, 2, SpeedLuck)) },
+            { "buyLuck", new ShopOptionFactory(0, () => new ShopOption("buyLuck", "Increase your luck by 0.5", 75, 1.25f, 2, BuyLuck)) },
+            { "increaseItemWeight",
+                new ShopOptionFactory(0, () => {
                     int rand = UnityEngine.Random.Range(0, rollerData.RollerSymbols.Length);
                     return new ShopOption("increaseItemWeight", "Increase the likelihood of " + rollerData.RollerSymbols[rand].SymbolId, 50, 5, 2, () => IncreaseItemWeight(rand));
-                } 
+                } )
             },
             //{ "freeDoubleTime", () => new ShopOption("freeDoubleTime", "Time speeds up 200%, but respins become free.", 10, 3, 1, FreeDoubleTime) },
             { "decreaseItemWeight",
-                () => {
+                new ShopOptionFactory(0, () => {
                     int rand = UnityEngine.Random.Range(0, rollerData.RollerSymbols.Length); 
                     return new ShopOption("decreaseItemWeight", "Decrease the likelihood of " + rollerData.RollerSymbols[rand].SymbolId, 50, 5, 2, () => DecreaseItemWeight(rand));
-                }
+                })
             },
-            { "speedSlots", () => new ShopOption("speedSlots", "Slots finish spinning 1 second faster", 75, 1.25f, 2, SpeedSlots) },
+            { "speedSlots", new ShopOptionFactory(0, () => new ShopOption("speedSlots", "Slots finish spinning 1 second faster", 75, 1.25f, 2, SpeedSlots)) },
         };
         // On start, reroll items
         Reroll();
@@ -75,7 +86,7 @@ public class ShopLogic : MonoBehaviour
             boughtAbility = false;
             timesRerolled += 1;
 
-            List<Func<ShopOption>> list = shopOptionFactories.Values.ToList();
+            List<ShopOptionFactory> list = shopOptionFactories.Values.ToList();
             int[] ints = new int[list.Count];
             for (int i = 0; i < ints.Length; i++)
             {
@@ -89,9 +100,10 @@ public class ShopLogic : MonoBehaviour
             for (int i = 0; i < buttons.Length; i++)
             {
                 //Button button = buttons[i];
-                ShopOption shopOption = list[ints[i]].Invoke();
+                ShopOption shopOption = list[ints[i]].Factory.Invoke();
 
                 buttons[i].text.text = shopOption.Description;
+                int calculatedCost = (int)(shopOption.Cost + Mathf.Pow(shopOption.CostMultiplier, list[ints[i]].BuyCount));
                 buttons[i].costText.text = "$" + shopOption.Cost.ToString();
                 buttons[i].action = shopOption.ApplierDelegate;
             }
@@ -100,7 +112,6 @@ public class ShopLogic : MonoBehaviour
             Debug.LogError("Reroll didn't work for some reason");
         }
     }
-
     public void SlowTime()
     {
         // Subtract the cost from player money
@@ -109,13 +120,15 @@ public class ShopLogic : MonoBehaviour
 
         // Player can spend money to slow time by 50%. Cost of it will increase 3x
 
-        var slowTime = shopOptionFactories["slowTime"].Invoke();
-
-        if (playerData.PlayerMoney >= slowTime.Cost)
+        var slowTime = shopOptionFactories["slowTime"].Factory.Invoke();
+        int cost = (int)(slowTime.Cost + Mathf.Pow(slowTime.CostMultiplier, shopOptionFactories["slowTime"].BuyCount));
+        if (playerData.PlayerMoney >= cost)
         {
-            playerData.PlayerMoney -= slowTime.Cost;
+            playerData.PlayerMoney -= cost;
             playerData.timeTickRate /= 2;
-            slowTime.Cost = Mathf.FloorToInt(slowTime.CostMultiplier * slowTime.Cost);
+            shopOptionFactories["slowTime"].BuyCount += 1;
+            boughtAbility = true;
+            Reroll();
         }
         else
         {
@@ -131,13 +144,16 @@ public class ShopLogic : MonoBehaviour
 
         // Player makes time tick faster in exchange for MASSIVE luck boost
 
-        var speedLuck = shopOptionFactories["speedLuck"].Invoke();
-
-        if (playerData.PlayerMoney >= speedLuck.Cost)
+        var speedLuck = shopOptionFactories["speedLuck"].Factory.Invoke();
+        int cost = (int)(speedLuck.Cost + Mathf.Pow(speedLuck.CostMultiplier, shopOptionFactories["speedLuck"].BuyCount));
+        if (playerData.PlayerMoney >= cost)
         {
+            playerData.PlayerMoney -= cost;
             playerData.timeTickRate *= 1.25f;
             playerData.PlayerLuck *= 2;
-            boughtAbility = true; Reroll();
+            shopOptionFactories["speedLuck"].BuyCount += 1;
+            boughtAbility = true;
+            Reroll();
         }
         else
         {
@@ -154,13 +170,15 @@ public class ShopLogic : MonoBehaviour
 
         // Player can buy general luck for better item combos, better symbols, and less bad symbols
 
-        var buyLuck = shopOptionFactories["buyLuck"].Invoke();
-
-        if (playerData.PlayerMoney >= buyLuck.Cost)
+        var buyLuck = shopOptionFactories["buyLuck"].Factory.Invoke();
+        int cost = (int)(buyLuck.Cost + Mathf.Pow(buyLuck.CostMultiplier, shopOptionFactories["buyLuck"].BuyCount));
+        if (playerData.PlayerMoney >= cost)
         {
-            playerData.PlayerMoney -= buyLuck.Cost;
+            playerData.PlayerMoney -= cost;
             playerData.PlayerLuck += 0.5f;
-            boughtAbility = true; Reroll();
+            shopOptionFactories["buyLuck"].BuyCount += 1;
+            boughtAbility = true;
+            Reroll();
         }
         else
         {
@@ -172,13 +190,15 @@ public class ShopLogic : MonoBehaviour
     {
         // Player can spend money to make a symbol appear more
 
-        var symbolBuy = shopOptionFactories["increaseItemWeight"].Invoke();
-
-        if (playerData.PlayerMoney >= symbolBuy.Cost)
+        var symbolBuy = shopOptionFactories["increaseItemWeight"].Factory.Invoke();
+        int cost = (int)(symbolBuy.Cost + Mathf.Pow(symbolBuy.CostMultiplier, shopOptionFactories["increaseItemWeight"].BuyCount));
+        if (playerData.PlayerMoney >= cost)
         {
-            playerData.PlayerMoney -= symbolBuy.Cost;
+            playerData.PlayerMoney -= cost;
             rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight + 10, 0);
-            boughtAbility = true; Reroll();
+            shopOptionFactories["increaseItemWeight"].BuyCount += 1;
+            boughtAbility = true; 
+            Reroll();
         }
         else
         {
@@ -200,14 +220,16 @@ public class ShopLogic : MonoBehaviour
     public void DecreaseItemWeight(int symbolID)
     {
         // Player can spend money to remove a symbol from the slot machine
-        var decreaseItemWeight = shopOptionFactories["decreaseItemWeight"].Invoke();
-
-        if (playerData.PlayerMoney >= decreaseItemWeight.Cost)
+        var decreaseItemWeight = shopOptionFactories["decreaseItemWeight"].Factory.Invoke();
+        int cost = (int)(decreaseItemWeight.Cost + Mathf.Pow(decreaseItemWeight.CostMultiplier, shopOptionFactories["decreaseItemWeight"].BuyCount));
+        if (playerData.PlayerMoney >= cost)
         {
-            playerData.PlayerMoney -= decreaseItemWeight.Cost;
+            playerData.PlayerMoney -= cost;
             // Decrease symbol weight
             rollerData.RollerSymbols[symbolID].Weight = Mathf.Max(rollerData.RollerSymbols[symbolID].Weight - 10, 0);
-            boughtAbility = true; Reroll();
+            shopOptionFactories["decreaseItemWeight"].BuyCount += 1;
+            boughtAbility = true; 
+            Reroll();
         }
         else
         {
@@ -218,14 +240,16 @@ public class ShopLogic : MonoBehaviour
     public void SpeedSlots()
     {
         // Player can spend money to remove a symbol from the slot machine
-        var speedSlots = shopOptionFactories["speedSlots"].Invoke();
-
-        if (playerData.PlayerMoney >= speedSlots.Cost)
+        var speedSlots = shopOptionFactories["speedSlots"].Factory.Invoke();
+        int cost = (int)(speedSlots.Cost + Mathf.Pow(speedSlots.CostMultiplier, shopOptionFactories["speedSlots"].BuyCount));
+        if (playerData.PlayerMoney >= cost)
         {
-            playerData.PlayerMoney -= speedSlots.Cost;
+            playerData.PlayerMoney -= cost;
             rollerData.MachineData.RollerDelay -= 1;
             rollerData.MachineData.CountdownDelay -= 0.1f;
-            boughtAbility = true; Reroll();
+            shopOptionFactories["speedSlots"].BuyCount += 1;
+            boughtAbility = true; 
+            Reroll();
         }
         else
         {
