@@ -95,7 +95,7 @@ public class GlobalData : SingletonBehaviour<GlobalData>
 
     void Tick()
     {
-        if (!gameCommenced || State.Current == GameState.Shop) return;
+        if (!gameCommenced /*|| State.Current == GameState.Shop*/) return;
         PlayerTime -= Time.deltaTime * timeTickRate;
         if(PlayerTime <= 0)
         {

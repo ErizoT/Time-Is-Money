@@ -1499,6 +1499,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7695935175311681196, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
   m_PrefabInstance: {fileID: 8032546416394247461}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4570439434661456723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5770272323263985270, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
+  m_PrefabInstance: {fileID: 8032546416394247461}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &6559321399128663222 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3782516155095890323, guid: bd552ab68ed026c4bab973a9ffcaf0fc, type: 3}
@@ -1518,6 +1529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PhoneController
   moveTarget: {fileID: 8313735488389803365}
   moveDistance: -1
+  phoneText: {fileID: 4570439434661456723}
   upCurve:
     duration: 0.5
     upCurve:

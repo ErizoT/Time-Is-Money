@@ -50,6 +50,7 @@ public class RollerDisplay : MonoBehaviour
     public void DoRoll()
     {
         if (IsRolling) { return; }
+        if (GlobalData.Instance.State.Current != GameState.Slots) return;
         if (GlobalData.Instance.PlayerMoney < GlobalData.RollerData.LuckPerMachine[SlotMachineId].RollCost) { return; }
         StartCoroutine(PerformRoll());
     }
