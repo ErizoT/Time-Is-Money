@@ -22,14 +22,14 @@ public class GlobalData : SingletonBehaviour<GlobalData>
         }
     }
     public Action<int> OnPlayerTimeChanged;
-    private int PlayerMoney;
+    private int playerMoney;
     public int PlayerMoney
     {
-        get => PlayerMoney;
+        get => playerMoney;
         set 
         { 
             OnPlayerMoneyChanged?.Invoke(value);
-            PlayerMoney = value;
+            playerMoney = value;
         }
     }
     public Action<int> OnPlayerMoneyChanged;
