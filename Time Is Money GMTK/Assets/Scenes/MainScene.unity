@@ -209,6 +209,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d69c2ae0c16f5e4a888575b3a2f8122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIController
+--- !u!114 &846459210 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+  m_PrefabInstance: {fileID: 1299171083315370732}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1152646445
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,9 +629,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 866058896374112314, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 866058896374112314, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1339312909013692947, guid: b14adf29002cb054d9711ade3887728e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3414436016423889240, guid: b14adf29002cb054d9711ade3887728e, type: 3}
       propertyPath: m_Enabled
@@ -737,6 +756,58 @@ PrefabInstance:
     - target: {fileID: 6553970232842833786, guid: b14adf29002cb054d9711ade3887728e, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
       value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 6558069775235404774, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713339258888852027, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 846459210}
+    - target: {fileID: 6713339258888852027, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713339258888852027, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.14901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713339258888852027, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.9450981
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 911a12765e5b1264f943d5f2c25cd7f8, type: 2}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3243282310603568003, guid: 911a12765e5b1264f943d5f2c25cd7f8, type: 2}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452554659318372908, guid: b14adf29002cb054d9711ade3887728e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7785021217372834447, guid: b14adf29002cb054d9711ade3887728e, type: 3}
       propertyPath: m_Name
